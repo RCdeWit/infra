@@ -31,10 +31,14 @@ Need to define this as code later on, but for now:
     ```bash
     sudo apt update
     sudo apt install nginx
-    sudo ufw allow 'Nginx HTTP'
+    sudo ufw allow 'Nginx Full'
     systemctl status nginx
-    sudo nano /etc/nginx/sites-available/rcdw.nl
 
+    sudo apt install certbot python3-certbot-nginx
+    sudo certbot --nginx -d rcdw.nl -d www.rcdw.nl
+
+    sudo nano /etc/nginx/sites-available/rcdw.nl
+    sudo rm /etc/nginx/sites-available/default
     sudo ln -s /etc/nginx/sites-available/rcdw.nl /etc/nginx/sites-enabled/
     sudo nginx -t
     sudo systemctl restart nginx
@@ -43,7 +47,7 @@ Need to define this as code later on, but for now:
     ```nginx
 server {
     listen 80;
-    listen [::]:80;
+    listen 443 default_server ssl;
 
     server_name localhost;
 
