@@ -62,5 +62,8 @@ Need to define this as code later on, but for now:
     ```
 
 ## To-do
-- [] Configure DNS for rcdw.nl in Digital Ocean
+- [] Configure DNS for rcdw.nl in Digital Ocean through Terraform
+- [] Set up nginx configuration to work for subdomain.rcdewit.nl
+- [] SSL certificates for VPS
+- [] Tailscale ACLs
 - [] Figure out a way to configure (Tailscale and nginx) VPS through Terraform (image or provisioner)
