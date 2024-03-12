@@ -11,5 +11,5 @@ terraform {
 
 # Configure the DigitalOcean Provider
 provider "digitalocean" {
-  # token = .env/DIGITALOCEAN_TOKEN
+  token = var.digitalocean_token
 }
