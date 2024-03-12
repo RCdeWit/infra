@@ -45,20 +45,20 @@ Need to define this as code later on, but for now:
     ```
 
     ```nginx
-server {
-    listen 80;
-    listen 443 default_server ssl;
+    server {
+        listen 80;
+        listen 443 default_server ssl;
 
-    server_name localhost;
+        server_name localhost;
 
-    proxy_set_header Host $host;
-    proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $remote_addr;
 
-    location /photos {
-        proxy_pass http://100.69.133.120:5001;
-        include proxy_params;
+        location /photos {
+            proxy_pass http://100.69.133.120:5001;
+            include proxy_params;
+        }
     }
-}
     ```
 
 ## To-do
