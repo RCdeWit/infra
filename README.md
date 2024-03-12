@@ -15,3 +15,48 @@ Terraform repository for cloud infra components
     ```
 6. Deploy with `terraform apply`
 7. Take note of the resulting IP address and connect to the VPS with `ssh root@<ip>`
+
+## VPS configuration
+
+Need to define this as code later on, but for now:
+
+1. [Set up a firewall](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04)
+    ```bash
+    ufw allow OpenSSH
+    ufw enable
+    ufw status
+    ```
+2. [Set up Tailscale](https://tailscale.com/kb/1275/install-ubuntu-2304)
+3. [Set up nginx](https://www.digitalocean.com/community/tutorials/how-to-configure-nginx-as-a-reverse-proxy-on-ubuntu-22-04)
+    ```bash
+    sudo apt update
+    sudo apt install nginx
+    sudo ufw allow 'Nginx HTTP'
+    systemctl status nginx
+    sudo nano /etc/nginx/sites-available/rcdw.nl
+
+    sudo ln -s /etc/nginx/sites-available/rcdw.nl /etc/nginx/sites-enabled/
+    sudo nginx -t
+    sudo systemctl restart nginx
+    ```
+
+    ```nginx
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name localhost;
+
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-For $remote_addr;
+
+    location /photos {
+        proxy_pass http://100.69.133.120:5001;
+        include proxy_params;
+    }
+}
+    ```
+
+## To-do
+[] Configure DNS for rcdw.nl in Digital Ocean
+[] Figure out a way to configure (Tailscale and nginx) VPS through Terraform (image or provisioner)
