@@ -15,8 +15,8 @@ variable "digitalocean_token" {
   description = "export TF_VAR_digitalocean_token=<personal_access_token>"
 }
 
-variable "digitalocean_ssh_key_ids" {
-  type        = list(string)
+variable "digitalocean_ssh_key_id" {
+  type        = string
   description = "List of Digital Ocean IDs for SSH keys"
-  default     = ["24026446"]
+  default     = "41281998"
 }
