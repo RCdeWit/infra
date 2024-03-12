@@ -62,5 +62,5 @@ Need to define this as code later on, but for now:
     ```
 
 ## To-do
-[] Configure DNS for rcdw.nl in Digital Ocean
-[] Figure out a way to configure (Tailscale and nginx) VPS through Terraform (image or provisioner)
+- [] Configure DNS for rcdw.nl in Digital Ocean
+- [] Figure out a way to configure (Tailscale and nginx) VPS through Terraform (image or provisioner)
