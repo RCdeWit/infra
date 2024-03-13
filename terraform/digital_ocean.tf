@@ -5,15 +5,6 @@ resource "digitalocean_droplet" "reverse_proxy_vps" {
   region   = "ams3"
   ssh_keys = [var.digitalocean_ssh_key_id]
   tags = var.default_tags
-
-  # connection {
-  #   type     = "ssh"
-  #   user     = "root"
-  #   host     = self.ipv4_address
-  # }
-  # provisioner "remote-exec" {
-  #     inline = ["ping google.com"]
-  # }
 }
 
 resource "digitalocean_project" "reverse_proxy" {

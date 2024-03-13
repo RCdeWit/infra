@@ -12,6 +12,8 @@ Terraform repository for cloud infra components
     ```bash
     export TF_VAR_digitalocean_token=<DO_PAT>
     export TF_VAR_digitalocean_ssh_key_id=<DO_SSH_KEY_ID>
+    export TF_VAR_tailscale_api_key=<TAILSCALE_API_KEY>
+    export TF_VAR_tailnet=<TAILNET_NAME>
     ```
 6. Deploy with `terraform apply`
 7. Take note of the resulting IP address and connect to the VPS with `ssh root@<ip>`
@@ -76,3 +78,4 @@ photos.rcdw.nl {
 - [x] SSL certificates for VPS
 - [x] Tailscale ACLs
 - [] Figure out a way to configure (Tailscale and nginx) VPS through Terraform (image or provisioner)
+- [] Get remote TF state

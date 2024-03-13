@@ -20,3 +20,13 @@ variable "digitalocean_ssh_key_id" {
   description = "List of Digital Ocean IDs for SSH keys"
   default     = "41281998"
 }
+
+variable "tailscale_api_key" {
+  type = string
+  description = "API key for Tailscale"
+}
+
+variable "tailnet" {
+  type = string
+  description = "Tailscale tailnet name"
+}
