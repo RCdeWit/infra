@@ -27,39 +27,48 @@ Need to define this as code later on, but for now:
     ufw status
     ```
 2. [Set up Tailscale](https://tailscale.com/kb/1275/install-ubuntu-2304)
-3. [Set up nginx](https://www.digitalocean.com/community/tutorials/how-to-configure-nginx-as-a-reverse-proxy-on-ubuntu-22-04)
-    ```bash
-    sudo apt update
-    sudo apt install nginx
-    sudo ufw allow 'Nginx Full'
-    systemctl status nginx
+3. [Set up Caddy](https://caddyserver.com/docs/install#debian-ubuntu-raspbian)
 
-    sudo apt install certbot python3-certbot-nginx
-    sudo certbot --nginx -d rcdw.nl -d www.rcdw.nl
+```bash
+sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https curl
+curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
+sudo apt update
+sudo apt install caddy
+cd ../etc/caddy
+nano Caddyfile
+```
 
-    sudo nano /etc/nginx/sites-available/rcdw.nl
-    sudo rm /etc/nginx/sites-available/default
-    sudo ln -s /etc/nginx/sites-available/rcdw.nl /etc/nginx/sites-enabled/
-    sudo nginx -t
-    sudo systemctl restart nginx
-    ```
+```
+# The Caddyfile is an easy way to configure your Caddy web server.
+#
+# Unless the file starts with a global options block, the first
+# uncommented line is always the address of your site.
+#
+# To use your own domain name (with automatic HTTPS), first make
+# sure your domain's A/AAAA DNS records are properly pointed to
+# this machine's public IP, then replace ":80" below with your
+# domain name.
 
-    ```nginx
-    server {
-        listen 80;
-        listen 443 default_server ssl;
+photos.rcdw.nl {
+        # Set this path to your site's directory.
+        # root * /usr/share/caddy
 
-        server_name localhost;
+        # Enable the static file server.
+        # file_server
 
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-For $remote_addr;
-
-        location /photos {
-            proxy_pass http://100.69.133.120:5001;
-            include proxy_params;
+        # Another common task is to set up a reverse proxy:
+        reverse_proxy 100.69.133.120:5078 {
+                header_up Host {http.reverse_proxy.upstream.hostport} # redundant
         }
-    }
-    ```
+        # Or serve a PHP site through php-fpm:
+        # php_fastcgi localhost:9000
+}
+
+# Refer to the Caddy docs for more information:
+# https://caddyserver.com/docs/caddyfile
+```
+
 
 ## To-do
 - [] Configure DNS for rcdw.nl in Digital Ocean through Terraform
