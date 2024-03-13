@@ -72,7 +72,7 @@ photos.rcdw.nl {
 
 ## To-do
 - [] Configure DNS for rcdw.nl in Digital Ocean through Terraform
-- [] Set up nginx configuration to work for subdomain.rcdewit.nl
-- [] SSL certificates for VPS
-- [] Tailscale ACLs
+- [x] Set up nginx configuration to work for subdomain.rcdewit.nl
+- [x] SSL certificates for VPS
+- [x] Tailscale ACLs
 - [] Figure out a way to configure (Tailscale and nginx) VPS through Terraform (image or provisioner)
