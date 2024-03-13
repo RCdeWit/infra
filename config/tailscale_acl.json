@@ -1,0 +1,69 @@
+// Example/default ACLs for unrestricted connections.
+{
+	// Declare static groups of users. Use autogroups for all users or users with a specific role.
+	// "groups": {
+	//  	"group:example": ["alice@example.com", "bob@example.com"],
+	// },
+
+	// Define the tags which can be applied to devices and by which users.
+	"tagOwners": {
+		"tag:nas":             ["autogroup:owner"],
+		"tag:reverse-proxy":   ["autogroup:owner"],
+		"tag:personal-device": ["autogroup:owner"],
+	},
+
+	// Define access control lists for users, groups, autogroups, tags,
+	// Tailscale IP addresses, and subnet ranges.
+	"acls": [
+		// Allow all connections for personal devices
+		{"action": "accept", "src": ["tag:personal-device"], "dst": ["*:*"]},
+
+		// Allow reverse proxy access to Synology Photos on NAS
+		{
+			"action": "accept",
+			"src":    ["tag:reverse-proxy"],
+			"dst":    ["tag:nas:5078"],
+		},
+	],
+
+	// Define users and devices that can use Tailscale SSH.
+	// "ssh": [
+	// 	// Allow all users to SSH into their own devices in check mode.
+	// 	// Comment this section out if you want to define specific restrictions.
+	// 	{
+	// 		"action": "check",
+	// 		"src":    ["autogroup:member"],
+	// 		"dst":    ["autogroup:self"],
+	// 		"users":  ["autogroup:nonroot", "root"],
+	// 	},
+	// ],
+	"nodeAttrs": [
+		{"target": ["100.125.64.43"], "attr": ["mullvad"]},
+		{"target": ["100.75.252.45"], "attr": ["mullvad"]},
+		{"target": ["100.69.133.120"], "attr": ["mullvad"]},
+		{"target": ["100.106.191.2"], "attr": ["mullvad"]},
+	],
+
+	// Test access rules every time they're saved.
+	"tests": [
+		{
+			"src": "tag:reverse-proxy",
+			"deny": [
+				"tag:personal-device:80",
+				"tag:nas:22",
+				"tag:nas:80",
+				"tag:nas:443",
+				"tag:nas:9999",
+			],
+		},
+		{
+			"src": "tag:personal-device",
+			"allow": [
+				"tag:nas:80",
+				"tag:nas:443",
+				"tag:reverse-proxy:80",
+				"tag:reverse-proxy:443",
+			],
+		},
+	],
+}

@@ -11,7 +11,7 @@ variable "default_tags" {
 }
 
 variable "digitalocean_token" {
-  type = string
+  type        = string
   description = "export TF_VAR_digitalocean_token=<personal_access_token>"
 }
 
@@ -22,11 +22,11 @@ variable "digitalocean_ssh_key_id" {
 }
 
 variable "tailscale_api_key" {
-  type = string
+  type        = string
   description = "API key for Tailscale"
 }
 
 variable "tailnet" {
-  type = string
+  type        = string
   description = "Tailscale tailnet name"
 }
