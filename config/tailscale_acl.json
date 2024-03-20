@@ -18,11 +18,14 @@
 		// Allow all connections for personal devices
 		{"action": "accept", "src": ["tag:personal-device"], "dst": ["*:*"]},
 
-		// Allow reverse proxy access to Synology Photos on NAS
+		// Allow reverse proxy access to services on Synology NAS
 		{
 			"action": "accept",
 			"src":    ["tag:reverse-proxy"],
-			"dst":    ["tag:nas:5078"],
+			"dst":    [
+				"tag:nas:5078", // Synology Photos
+				"tag:nas:5232", // Radicale
+			],
 		},
 	],
 
