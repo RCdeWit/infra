@@ -28,11 +28,12 @@ apt.packages(
 server.shell(
     name="Enable firewall with OpenSSH enabled",
     _sudo=True,
-    commands=[f"ufw allow OpenSSH", "ufw enable"],
+    commands=["ufw allow OpenSSH", "ufw --force enable"],
 )
 
 files.put(
     name="Copy Caddy configuration to VPS",
+    _sudo=True,
     src="config/deploy/Caddyfile",
     dest="/etc/caddy/",
     user="deploy",
@@ -40,6 +41,7 @@ files.put(
 
 systemd.service(
     name="Enable Caddy",
+    _sudo=True,
     service="caddy",
     enabled=True,
     restarted=True,
