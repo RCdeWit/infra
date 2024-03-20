@@ -4,10 +4,16 @@ from pyinfra.operations import server, files
 server.user(
     name="Create deployment user",
     user="deploy",
+    password=None,
     system=True,
     create_home=True,
     home="/home/deploy",
     groups=["sudo"],
+)
+
+files.put(
+    src="config/bootstrap/sudoers",
+    dest="/etc/sudoers",
 )
 
 files.put(

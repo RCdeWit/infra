@@ -18,7 +18,23 @@ Terraform repository for cloud infra components
 6. Deploy with `terraform apply`
 7. Take note of the resulting IP address and connect to the VPS with `ssh root@<ip>`
 
-## VPS configuration
+## How to configure VPS
+1. Create a Tailscale auth key. Apply the following settings:
+    - Reusable: `True`
+    - Ephemeral: `True`
+    - Tags: `tag:reverse-proxy`
+2. Export the auth key as an environment variable:
+    ```bash
+    export TAILSCALE_AUTH_KEY=<TAILSCALE_AUTH_KEY>
+    ```
+3. `cd pyinfra`
+4. `python3 -m venv .venv`
+5. `source .venv/bin/activate`
+6. `pip install -r requirements.txt`
+7. Only for first-time deployments: `pyinfra inventory.py bootstrap.py  --ssh-user root`
+8. For all deployments: `pyinfra inventory.py deploy.py`
+
+<!-- ## VPS configuration
 
 Need to define this as code later on, but for now:
 
@@ -39,43 +55,12 @@ sudo apt update
 sudo apt install caddy
 cd ../etc/caddy
 nano Caddyfile
-```
-
-```
-# The Caddyfile is an easy way to configure your Caddy web server.
-#
-# Unless the file starts with a global options block, the first
-# uncommented line is always the address of your site.
-#
-# To use your own domain name (with automatic HTTPS), first make
-# sure your domain's A/AAAA DNS records are properly pointed to
-# this machine's public IP, then replace ":80" below with your
-# domain name.
-
-photos.rcdw.nl {
-        # Set this path to your site's directory.
-        # root * /usr/share/caddy
-
-        # Enable the static file server.
-        # file_server
-
-        # Another common task is to set up a reverse proxy:
-        reverse_proxy 100.69.133.120:5078 {
-                header_up Host {http.reverse_proxy.upstream.hostport} # redundant
-        }
-        # Or serve a PHP site through php-fpm:
-        # php_fastcgi localhost:9000
-}
-
-# Refer to the Caddy docs for more information:
-# https://caddyserver.com/docs/caddyfile
-```
-
+``` -->
 
 ## To-do
-- [] Configure DNS for rcdw.nl in Digital Ocean through Terraform
+- [x] Configure DNS for rcdw.nl in Digital Ocean through Terraform
 - [x] Set up nginx configuration to work for subdomain.rcdewit.nl
 - [x] SSL certificates for VPS
 - [x] Tailscale ACLs
-- [] Figure out a way to configure (Tailscale and nginx) VPS through Terraform (image or provisioner)
+- [x] Figure out a way to configure (Tailscale and nginx) VPS through Terraform (image or provisioner)
 - [] Get remote TF state
