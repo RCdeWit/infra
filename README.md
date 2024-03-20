@@ -31,7 +31,7 @@ Terraform repository for cloud infra components
 4. `python3 -m venv .venv`
 5. `source .venv/bin/activate`
 6. `pip install -r requirements.txt`
-7. Only for first-time deployments: `pyinfra inventory.py bootstrap.py  --ssh-user root`
+7. Only for first-time deployments: `yes | pyinfra inventory.py bootstrap.py  --ssh-user root`
 8. For all deployments: `pyinfra inventory.py deploy.py`
 
 <!-- ## VPS configuration

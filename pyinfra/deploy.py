@@ -44,6 +44,7 @@ systemd.service(
     _sudo=True,
     service="caddy",
     enabled=True,
+    running=True,
     restarted=True,
 )
 
