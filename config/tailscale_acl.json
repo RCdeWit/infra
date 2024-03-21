@@ -24,7 +24,7 @@
 			"src":    ["tag:reverse-proxy"],
 			"dst":    [
 				"tag:nas:5078", // Synology Photos
-				"tag:nas:5232", // Radicale
+				"tag:nas:5232", // Synology Calendar
 			],
 		},
 	],
