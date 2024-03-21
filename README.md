@@ -49,6 +49,7 @@ What's included?
 7. For all deployments: `pyinfra inventory.py deploy.py`
 
 ## Planned improvements
+- [] Split up `pyinfra/deploy.py` into `base` and `deploy`
 - [] Provision SSH keys with Terraform
 - [] Make ports for services dynamic
 - [] Remote Terraform state
