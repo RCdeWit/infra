@@ -50,5 +50,7 @@ What's included?
 
 ## Planned improvements
 - [] Provision SSH keys with Terraform
+- [] Make ports for services dynamic
 - [] Remote Terraform state
 - [] Deployments through GitHub actions
+- [] Include NAS configuration as code
