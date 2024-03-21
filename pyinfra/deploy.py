@@ -41,9 +41,9 @@ apt.packages(
 )
 
 server.shell(
-    name="Enable firewall with OpenSSH enabled",
+    name="Enable firewall with OpenSSH, HTTP, and HTTPS enabled",
     _sudo=True,
-    commands=["ufw allow OpenSSH", "ufw --force enable"],
+    commands=["ufw allow OpenSSH", "sudo ufw allow proto tcp from any to any port 80,443", "ufw --force enable"],
 )
 
 files.put(
@@ -60,6 +60,7 @@ systemd.service(
     service="caddy",
     enabled=True,
     running=True,
+    reloaded=True,
     restarted=True,
 )
 
