@@ -7,6 +7,11 @@ terraform {
       version = "2.36.0"
     }
 
+    fly-io = {
+      source = "DAlperin/fly-io"
+      version = "0.0.4"
+    }
+
     tailscale = {
       source  = "tailscale/tailscale"
       version = "0.15.0"
@@ -22,4 +27,8 @@ provider "digitalocean" {
 provider "tailscale" {
   api_key = var.tailscale_api_key
   tailnet = var.tailnet
+}
+
+provider "fly-io" {
+  flytoken = var.flytoken
 }
