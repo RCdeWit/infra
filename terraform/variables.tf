@@ -21,6 +21,11 @@ variable "digitalocean_ssh_key_id" {
   default     = "41281998"
 }
 
+variable "flytoken" {
+  type        = string
+  description = "Fly.io API token"
+}
+
 variable "tailscale_api_key" {
   type        = string
   description = "API key for Tailscale"
