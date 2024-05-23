@@ -7,7 +7,7 @@ terraform {
       version = "2.36.0"
     }
 
-    fly-io = {
+    fly_io = {
       source = "DAlperin/fly-io"
       version = "0.0.4"
     }
@@ -29,6 +29,6 @@ provider "tailscale" {
   tailnet = var.tailnet
 }
 
-provider "fly-io" {
-  flytoken = var.flytoken
+provider "fly_io" {
+  fly_token = var.fly_token
 }
