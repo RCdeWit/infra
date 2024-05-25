@@ -22,7 +22,7 @@ apt.repo(
 )
 
 apt.packages(
-    name="Install Tailscale"
+    name="Install Tailscale",
     packages=["tailscale"],
     update=True,
     latest=True,

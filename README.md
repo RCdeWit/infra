@@ -46,10 +46,13 @@ What's included?
 5. Install the requirements: `pip install -r requirements.txt`
 6. Only for first-time deployments: `yes | pyinfra inventory.py bootstrap.py
    --ssh-user root`
-7. For all deployments: `pyinfra inventory.py deploy.py`
+7. For the first and all subsequent deployments: `pyinfra inventory.py base.py` and `pyinfra inventory.py deploy.py`
+
+### Update VPS
+
+To update the VPS, for example to upgrade packages, simply run `pyinfra inventory.py base.py` and `pyinfra inventory.py deploy.py`.
 
 ## Planned improvements
-- [] Split up `pyinfra/deploy.py` into `base` and `deploy`
 - [] Provision SSH keys with Terraform
 - [] Make ports for services dynamic
 - [] Remote Terraform state
