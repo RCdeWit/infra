@@ -8,12 +8,6 @@ terraform {
     skip_requesting_account_id  = true
     skip_s3_checksum            = true
     use_path_style              = true
-    endpoints = {
-      s3 = "https://fly.storage.tigris.dev"
-    }
-    region = "auto"
-    bucket = "infra-tfstate"
-    key    = "terraform.tfstate"
   }
 
   required_providers {

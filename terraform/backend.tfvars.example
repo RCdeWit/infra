@@ -1,2 +1,8 @@
 access_key = "123"
 secret_key = "123"
+endpoints = {
+      s3 = "https://fly.storage.tigris.dev"
+    }
+region = "auto"
+bucket = "infra-tfstate"
+key    = "terraform.tfstate"
