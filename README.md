@@ -5,6 +5,7 @@ uses Terrafrom to provision cloud resources on Digital Ocean, and Pyinfra to
 configure those resources. Networking is managed through Tailscale.
 
 What's included?
+- TransIP domains and DNS entries
 - Reverse proxy to NAS
 - Tailscale ACLs
 
@@ -26,14 +27,15 @@ What's included?
 
 ### Provision Digital Ocean resources
 
-1. Create a personal access token (PAT) on Digital Ocean (DO)
-2. Install the DO CLI: `brew instal doctl`
-3. Add an SSH key to your DO account and copy the public key to
+1. Create an access token on TransIP
+2. Create a personal access token (PAT) on Digital Ocean (DO)
+3. Install the DO CLI: `brew instal doctl`
+4. Add an SSH key to your DO account and copy the public key to
    `config/id_rsa.pub`
-4. Retrieve the SSH key ID with `doctl compute ssh-key list`
-5. Set the appropriate environment variables in `config/.env` and source them;
+5. Retrieve the SSH key ID with `doctl compute ssh-key list`
+6. Set the appropriate environment variables in `config/.env` and source them;
    take a look at `.config/.env.example` for an example.
-6. From the `terraform` directory, deploy with `terraform apply`
+7. From the `terraform` directory, deploy with `terraform apply`
 
 ### Configure VPS
 

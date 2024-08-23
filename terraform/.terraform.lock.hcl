@@ -1,6 +1,28 @@
 # This file is maintained automatically by "terraform init".
 # Manual edits may be lost in future updates.
 
+provider "registry.terraform.io/aequitas/transip" {
+  version     = "0.1.23"
+  constraints = "0.1.23"
+  hashes = [
+    "h1:txRsyql60m201D31gy9Fox/9CCBnnzVe+wnEh6MVCus=",
+    "zh:26ab2ccf75da0d14a3a1906a76dc9543dbeadfd648f6029404c34c18079ec1e9",
+    "zh:2e5a4ff63c497f07ce690cc3063cfa5403d6f25b45bcce4e94a08ded533d57e3",
+    "zh:42c8522bc2cb6e3d74fcc1a39097fae58da3d97e8c39088b9126cb66a5ade807",
+    "zh:49e5f6b276bc53e87ade7b969eaa4cb07946d4203f1872e85180a59d434f6161",
+    "zh:70ff353644cfcd8fff143c39a08c056aa14d4a8888b4e1b1655511acf1ee70da",
+    "zh:7574c1f050108ea5bf914e9737103b45fe35efd9266b462088f6c147cebf8abb",
+    "zh:92258bd923121381e3a73bb700e28f8a8770c3b21df734b4115190738de29266",
+    "zh:a4629933136ddfbf241fde17c9bdc9e8148bb01cc6ce7ea05c17a51f00177d85",
+    "zh:abaef12383c34436a1700c9ca9b1d3879b808ecfefe55d548439a945a122b43e",
+    "zh:cc2bc117c533df978f80257847d818c2e66edfff343afafff98b1debaa20f89c",
+    "zh:d10fa28a09cf4227ad5e5c340fbbc36f4f25405dbfcebcafb53c0e92174b465e",
+    "zh:d8a7c440b744f7e41e22f24b3db904e0ea467f220a6904c2ae39350292a3858c",
+    "zh:eb16fbefcb38e30966860bb7d4a316992a607fa21faca1f10fb4a5a84d8c6543",
+    "zh:edc4bbe56163df70b27980793fc194b796e57f6bd0cca8e421d571af272fdf58",
+  ]
+}
+
 provider "registry.terraform.io/digitalocean/digitalocean" {
   version     = "2.36.0"
   constraints = "2.36.0"

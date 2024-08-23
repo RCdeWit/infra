@@ -1,0 +1,23 @@
+domains:
+  - domain: principatus.nl
+    dns_records:
+      A:
+        - name: "@"
+          value: "185.199.108.153"
+      AAAA:
+        - name: "@"
+          value: "2606:50c0:8000::153"
+      TXT:
+        - name: "@"
+          value: "v=spf1 include:_spf.google.com ~all"
+        - name: "_dmarc"
+          value: "v=DMARC1; p=reject; rua=mailto:dmarcreports@rcdewit.nl"
+        - name: "_github-pages-challenge-rcdewit"
+          value: "7181276e8edf01e013fdd19c706aa1"
+      CAA:
+        - name: "@"
+          value: "0 issue 'letsencrypt.org'"
+      CNAME:
+        - name: "www"
+          value: "rcdewit.github.io."
+      

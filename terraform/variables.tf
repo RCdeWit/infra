@@ -30,3 +30,13 @@ variable "tailnet" {
   type        = string
   description = "Tailscale tailnet name"
 }
+
+variable "transip_account_name" {
+  type        = string
+  description = "Transip account name"
+}
+
+variable "transip_access_token" {
+  type        = string
+  description = "Transip access token"
+}

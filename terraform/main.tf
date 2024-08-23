@@ -20,6 +20,11 @@ terraform {
       source  = "tailscale/tailscale"
       version = "0.15.0"
     }
+
+    transip = {
+      source = "aequitas/transip"
+      version = "0.1.23"
+    }
   }
 }
 
@@ -31,4 +36,9 @@ provider "digitalocean" {
 provider "tailscale" {
   api_key = var.tailscale_api_key
   tailnet = var.tailnet
+}
+
+provider "transip" {
+  account_name = var.transip_account_name
+  access_token = var.transip_access_token
 }
