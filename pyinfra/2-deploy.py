@@ -31,7 +31,8 @@ files.put(
     name="Copy Caddy configuration to VPS",
     _sudo=True,
     src="config/deploy/Caddyfile",
-    dest="/etc/caddy/",
+    dest="/etc/caddy/Caddyfile",
+    assume_exists=True,
     user="deploy",
 )
 
