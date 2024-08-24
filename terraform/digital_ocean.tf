@@ -25,3 +25,13 @@ resource "digitalocean_domain" "domains" {
   name       = each.key
   ip_address = digitalocean_droplet.reverse_proxy_vps.ipv4_address
 }
+
+resource "digitalocean_record" "letsencrypt" {
+  for_each = digitalocean_domain.domains
+  domain   = each.value.name
+  type     = "CAA"
+  name     = "@"
+  value    = "letsencrypt.org."
+  tag      = "issue"
+  flags    = "0"
+}
