@@ -12,9 +12,9 @@ locals {
     for domain in local.domains : [
       for record_type, records in domain.dns_records : [
         for record in records : {
-          domain = domain.domain
-          name   = record.name
-          type   = record_type
+          domain  = domain.domain
+          name    = record.name
+          type    = record_type
           content = toset([record.value])
         }
       ]
