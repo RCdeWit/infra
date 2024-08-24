@@ -15,7 +15,8 @@ locals {
           domain  = domain.domain
           name    = record.name
           type    = record_type
-          content = toset([record.value])
+          # Ensure content is always a list
+          content = flatten([record.value])
         }
       ]
     ]
@@ -23,6 +24,7 @@ locals {
 }
 
 # Iterate over each domain and create the transip_domain data sources
+# If this is a resource, Terraform will happily register any domains listed
 data "transip_domain" "domain" {
   for_each = { for domain in local.domains : domain.domain => domain }
 
