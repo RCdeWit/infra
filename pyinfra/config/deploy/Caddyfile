@@ -9,3 +9,21 @@ calendar.rcdw.nl {
                 header_up Host {http.reverse_proxy.upstream.hostport}
         }
 }
+
+drive.rcdw.nl {
+        reverse_proxy 100.69.133.120:5069 {
+                header_up Host {http.reverse_proxy.upstream.hostport}
+        }
+}
+
+paperless.rcdw.nl {
+        reverse_proxy 100.69.133.120:8010 {
+                header_up Host {http.reverse_proxy.upstream.hostport}
+        }
+}
+
+firefly.rcdw.nl {
+        reverse_proxy 100.69.133.120:6182 {
+                header_up Host {http.reverse_proxy.upstream.hostport}
+        }
+}
