@@ -55,7 +55,7 @@ resource "transip_domain_nameservers" "nameservers" {
 # Create DNS records for each domain
 resource "transip_dns_record" "record" {
   for_each = {
-    for idx, record in local.dns_records : "${record.domain}_${record.type}_${record.name}_${idx}" => record
+    for idx, record in local.dns_records : "${record.domain}_${record.type}_${record.name}_${record.content[0]}" => record
   }
 
   domain  = each.value.domain
