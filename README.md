@@ -66,4 +66,3 @@ Ubuntu image, it's easiest to do a fresh deployment.
 - [] Make ports for services dynamic
 - [] Deployments through GitHub actions
 - [] Include NAS configuration as code
-- [] Include TransIP nameservers and remaining domains
