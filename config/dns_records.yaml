@@ -385,7 +385,7 @@ domains:
             - "v=spf1 include:_spf.protonmail.ch ~all"
         - name: "_dmarc"
           value: "v=DMARC1; p=reject; rua=mailto:dmarcreports@binary3.dev"
-        - name: "_github-pages-challenge-rcdewit"
+        - name: "_github-pages-challenge-Onehot-NL"
           value: "d1b3747d769a732909247d88202fa9"
       CAA:
         - name: "@"
