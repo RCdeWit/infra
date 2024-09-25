@@ -598,6 +598,8 @@ domains:
             - "v=spf1 include:_spf.protonmail.ch ~all"
         - name: "_dmarc"
           value: "v=DMARC1; p=reject;"
+        - name: "_github-pages-challenge-rcdewit"
+          value: "de5a46eb2299e05b3b7ee58fd2c43d"
       CAA:
         - name: "@"
           value: "0 issue 'letsencrypt.org'"
