@@ -16,7 +16,7 @@ domains:
           value: "v=DMARC1; p=none;"
       CAA:
         - name: "@"
-          value: "0 issue 'letsencrypt.org'"
+          value: "0 issue letsencrypt.org"
   - domain: binary3.dev
     nameservers:
       - "ns0.transip.net"
@@ -53,7 +53,7 @@ domains:
           value: "c4afe4d9eff5c15253adc4b49c134d"
       CAA:
         - name: "@"
-          value: "0 issue 'letsencrypt.org'"
+          value: "0 issue letsencrypt.org"
       NS:
         - name: "mbmail"
           value: "dns.mnbrd.email."
@@ -96,7 +96,7 @@ domains:
           value: "b8bc8d2cf7d775cadea54a284d7f50"
       CAA:
         - name: "@"
-          value: "0 issue 'letsencrypt.org'"
+          value: "0 issue letsencrypt.org"
       NS:
         - name: "mbmail"
           value: "dns.mnbrd.email."
@@ -139,7 +139,7 @@ domains:
           value: "78ebc9bbe174c48ef8f1ad316b583d"
       CAA:
         - name: "@"
-          value: "0 issue 'letsencrypt.org'"
+          value: "0 issue letsencrypt.org"
       CNAME:
         - name: "www"
           value: "rcdewit.github.io."
@@ -185,7 +185,7 @@ domains:
           value: "fdc15e880a865adaf9ac12b77d8661"
       CAA:
         - name: "@"
-          value: "0 issue 'letsencrypt.org'"
+          value: "0 issue letsencrypt.org"
       CNAME:
         - name: "www"
           value: "rcdewit.github.io."
@@ -224,7 +224,7 @@ domains:
           value: "16af4c5ffecb52931277ef7e619864"
       CAA:
         - name: "@"
-          value: "0 issue 'letsencrypt.org'"
+          value: "0 issue letsencrypt.org"
       CNAME:
         - name: "www"
           value: "rcdewit.github.io."
@@ -257,7 +257,7 @@ domains:
           value: "7ba4b24c3b23002734bb2a2461bf81"
       CAA:
         - name: "@"
-          value: "0 issue 'letsencrypt.org'"
+          value: "0 issue letsencrypt.org"
       CNAME:
         - name: "www"
           value: "rcdewit.github.io."
@@ -297,7 +297,7 @@ domains:
           value: "cc83004a9e63d6c564bc002b65b04e"
       CAA:
         - name: "@"
-          value: "0 issue 'letsencrypt.org'"
+          value: "0 issue letsencrypt.org"
       CNAME:
         - name: "www"
           value: "rcdewit.github.io."
@@ -343,7 +343,7 @@ domains:
           value: "e336f4dde40b53d2bd1f17eca254f5"
       CAA:
         - name: "@"
-          value: "0 issue 'letsencrypt.org'"
+          value: "0 issue letsencrypt.org"
       CNAME:
         - name: "www"
           value: "rcdewit.github.io."
@@ -389,7 +389,7 @@ domains:
           value: "d1b3747d769a732909247d88202fa9"
       CAA:
         - name: "@"
-          value: "0 issue 'letsencrypt.org'"
+          value: "0 issue letsencrypt.org"
       CNAME:
         - name: "www"
           value: "rcdewit.github.io."
@@ -430,7 +430,7 @@ domains:
           value: "v=DMARC1; p=none;"
       CAA:
         - name: "@"
-          value: "0 issue 'letsencrypt.org'"
+          value: "0 issue letsencrypt.org"
   - domain: principatus.nl
     nameservers:
       - "ns0.transip.net"
@@ -460,7 +460,7 @@ domains:
           value: "7181276e8edf01e013fdd19c706aa1"
       CAA:
         - name: "@"
-          value: "0 issue 'letsencrypt.org'"
+          value: "0 issue letsencrypt.org"
       CNAME:
         - name: "www"
           value: "rcdewit.github.io."
@@ -500,7 +500,7 @@ domains:
           value: "7c042716cbfe1c49b27ee6b0478e14"
       CAA:
         - name: "@"
-          value: "0 issue 'letsencrypt.org'"
+          value: "0 issue letsencrypt.org"
       CNAME:
         - name: "www"
           value: "rcdewit.github.io."
@@ -547,7 +547,7 @@ domains:
           value: "6655b1e82182fe56cd9687f3a6ab92"
       CAA:
         - name: "@"
-          value: "0 issue 'letsencrypt.org'"
+          value: "0 issue letsencrypt.org"
       CNAME:
         - name: "www"
           value: "rcdewit.github.io."
@@ -565,7 +565,7 @@ domains:
     dns_records:
       CAA:
           - name: "@"
-            value: "0 issue 'letsencrypt.org'"
+            value: "0 issue letsencrypt.org"
   - domain: robdewit.nl
     nameservers:
       - "ns0.transip.net"
@@ -602,7 +602,7 @@ domains:
           value: "de5a46eb2299e05b3b7ee58fd2c43d"
       CAA:
         - name: "@"
-          value: "0 issue 'letsencrypt.org'"
+          value: "0 issue letsencrypt.org"
       CNAME:
         - name: "www"
           value: "rcdewit.github.io."
