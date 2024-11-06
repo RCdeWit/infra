@@ -171,7 +171,7 @@ domains:
       TXT:
         - name: "@"
           value:
-            - "protonmail-verification=1aa3348fea7044c40aeeece7a0693f5f4f57011a"
+            - "protonmail-verification=33c7ab666f7b4800d4cc13103fa05b3c8db5df41"
             - "v=spf1 include:_spf.protonmail.ch ~all"
         - name: "_dmarc"
           value: "v=DMARC1; p=reject; rua=mailto:dmarcreports@rcdewit.nl"
