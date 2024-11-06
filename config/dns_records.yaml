@@ -158,17 +158,11 @@ domains:
       A:
         - name: "@"
           value:
-            - "185.199.108.153"
-            - "185.199.109.153"
-            - "185.199.110.153"
-            - "185.199.111.153"
+            - "66.241.124.149"
       AAAA:
         - name: "@"
           value:
-            - "2606:50c0:8000::153"
-            - "2606:50c0:8001::153"
-            - "2606:50c0:8002::153"
-            - "2606:50c0:8003::153"
+            - "2a09:8280:1::42:2b27:0"
       MX:
         - name: "@"
           value:
@@ -188,7 +182,7 @@ domains:
           value: "0 issue letsencrypt.org"
       CNAME:
         - name: "www"
-          value: "rcdewit.github.io."
+          value: "dewitliezenga-nl.fly.dev."
         - name: "protonmail._domainkey"
           value: "protonmail.domainkey.dvbh3med6agutsmlhohvn4lqvxwkcgp3bniyk7uxp7vdzq6qezqba.domains.proton.ch."
         - name: "protonmail2._domainkey"
