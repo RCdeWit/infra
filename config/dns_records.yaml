@@ -184,11 +184,11 @@ domains:
         - name: "www"
           value: "dewitliezenga-nl.fly.dev."
         - name: "protonmail._domainkey"
-          value: "protonmail.domainkey.dvbh3med6agutsmlhohvn4lqvxwkcgp3bniyk7uxp7vdzq6qezqba.domains.proton.ch."
+          value: "protonmail.domainkey.d2skxdydgjj4wnjecv7nulcqnn7gewxrh3z5kkjzd3jlxjdgqxvda.domains.proton.ch."
         - name: "protonmail2._domainkey"
-          value: "protonmail2.domainkey.dvbh3med6agutsmlhohvn4lqvxwkcgp3bniyk7uxp7vdzq6qezqba.domains.proton.ch."
+          value: "protonmail2.domainkey.d2skxdydgjj4wnjecv7nulcqnn7gewxrh3z5kkjzd3jlxjdgqxvda.domains.proton.ch."
         - name: "protonmail3._domainkey"
-          value: "protonmail3.domainkey.dvbh3med6agutsmlhohvn4lqvxwkcgp3bniyk7uxp7vdzq6qezqba.domains.proton.ch."
+          value: "protonmail3.domainkey.d2skxdydgjj4wnjecv7nulcqnn7gewxrh3z5kkjzd3jlxjdgqxvda.domains.proton.ch."
   - domain: dobbertjeduik.be
     nameservers:
       - "ns0.transip.net"
