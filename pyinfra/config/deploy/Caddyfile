@@ -1,5 +1,5 @@
 photos.rcdw.nl {
-        reverse_proxy 100.69.133.120:5078 {
+        reverse_proxy 100.69.133.120:2283 {
                 header_up Host {http.reverse_proxy.upstream.hostport}
         }
 }
@@ -12,18 +12,6 @@ calendar.rcdw.nl {
 
 drive.rcdw.nl {
         reverse_proxy 100.69.133.120:5068 {
-                header_up Host {http.reverse_proxy.upstream.hostport}
-        }
-}
-
-paperless.rcdw.nl {
-        reverse_proxy 100.69.133.120:8010 {
-                header_up Host {http.reverse_proxy.upstream.hostport}
-        }
-}
-
-firefly.rcdw.nl {
-        reverse_proxy 100.69.133.120:6182 {
                 header_up Host {http.reverse_proxy.upstream.hostport}
         }
 }
