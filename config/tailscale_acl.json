@@ -23,11 +23,9 @@
 			"action": "accept",
 			"src":    ["tag:reverse-proxy"],
 			"dst":    [
-				"tag:nas:5078", // Synology Photos
+				"tag:nas:2283", // Immich
 				"tag:nas:5232", // Synology Calendar
 				"tag:nas:5068", // Synology Drive
-				"tag:nas:8010", // Paperless
-				"tag:nas:6182", // Firefly
 			],
 		},
 	],
