@@ -55,8 +55,7 @@ What's included?
 
 ### Update VPS
 
-To update the VPS, for example to upgrade packages, simply run `pyinfra
-inventory.py 1-base.py` and `pyinfra inventory.py 2-deploy.py`. To use a new
+To update the VPS, for example to upgrade packages, simply run `pyinfra inventory.py 1-base.py` and `pyinfra inventory.py 2-deploy.py`. To use a new
 Ubuntu image, it's easiest to do a fresh deployment.
 
 ## Planned improvements
