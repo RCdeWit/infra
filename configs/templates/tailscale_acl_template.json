@@ -13,22 +13,11 @@
     {
       "action": "accept",
       "src": ["tag:reverse-proxy"],
-      "dst": [
-        // Photos
-        "tag:nas:2283",
-        // Karakeep
-        "tag:nas:3000",
-        // Id
-        "tag:nas:3232",
-        // Drive
-        "tag:nas:5068",
-        // Calendar
-        "tag:nas:5232"
-      ]
+      "dst": "__REVERSE_PROXY_DST__"
     }
   ],
   "nodeAttrs": [
-    {"target": [""100.69.133.120""], "attr": ["mullvad"]}
+    {"target": ["__UPSTREAM_IP__"], "attr": ["mullvad"]}
   ],
   "tests": [
     {
