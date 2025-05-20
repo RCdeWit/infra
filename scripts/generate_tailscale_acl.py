@@ -31,7 +31,7 @@ def main():
     # Load and inject into template
     template_str = TEMPLATE_PATH.read_text()
     template_str = template_str.replace('"__REVERSE_PROXY_DST__"', dst_block)
-    template_str = template_str.replace('__UPSTREAM_IP__', json.dumps(upstream_ip))
+    template_str = template_str.replace('"__UPSTREAM_IP__"', json.dumps(upstream_ip))
 
     OUTPUT_PATH.write_text(template_str)
     print(f"✅ Tailscale ACL with comments generated at {OUTPUT_PATH}")
