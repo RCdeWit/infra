@@ -21,7 +21,7 @@ resource "digitalocean_project" "reverse_proxy" {
   [for domain in digitalocean_domain.domains : domain.urn])
 }
 resource "digitalocean_domain" "domains" {
-  for_each   = toset(yamldecode(file("${path.module}/../config/reverse_proxy_domains.yaml")))
+  for_each   = toset(keys(yamldecode(file("${path.module}/../configs/services.yaml")).services))
   name       = each.key
   ip_address = digitalocean_droplet.reverse_proxy_vps.ipv4_address
 }
