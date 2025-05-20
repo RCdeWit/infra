@@ -10,6 +10,12 @@ drive.rcdw.nl {
         }
 }
 
+id.rcdw.nl {
+        reverse_proxy 100.69.133.120:3232 {
+                header_up Host {http.reverse_proxy.upstream.hostport}
+        }
+}
+
 karakeep.rcdw.nl {
         reverse_proxy 100.69.133.120:3000 {
                 header_up Host {http.reverse_proxy.upstream.hostport}

@@ -25,6 +25,7 @@
 			"dst":    [
 				"tag:nas:2283", // Immich
 				"tag:nas:3000", // Karakeep
+				"tag:nas:3232", // Pocket ID
 				"tag:nas:5232", // Synology Calendar
 				"tag:nas:5068", // Synology Drive
 			],
