@@ -16,6 +16,14 @@ What's included?
 - Digital Ocean account
 - Tailscale account and Tailnet
 
+### Generate config files
+
+Terraform and Pyinfra rely config files that are based on
+`configs/services.yaml`. To generate their required configs, run the following:
+
+1. `uv run scripts/generate_tailscale_acl.py`
+2. `uv run scripts/generate_caddyfile.py`
+
 ### Create Terraform state and initialize
 
 1. Create an S3 compatible bucket (e.g., using
@@ -31,11 +39,15 @@ What's included?
 3. Add an SSH key to your DO account and copy the public key to
    `config/id_rsa.pub`
 4. Retrieve the SSH key ID with `doctl compute ssh-key list`
-5. Set the appropriate environment variables in `config/.env` and source them;
+5. Set the appropriate environment variables in `configs/.env` and source them;
    take a look at `.config/.env.example` for an example.
 6. From the `terraform` directory, deploy with `terraform apply`
 
 ### Configure VPS
+
+This project uses PyInfra to manage the provisioned resources in an imperative
+manner. `scripts/deploy_reverse_proxt.py` provides a wrapper script for the
+different stages in the deployement.
 
 1. Create a [Tailscale auth
    key](https://login.tailscale.com/admin/settings/keys). Apply the following
@@ -44,22 +56,19 @@ What's included?
     - Ephemeral: `True`
     - Tags: `tag:reverse-proxy`
 2. Add the auth key to `config/.env` and source it.
-3. Navigate to `pyinfra` and create a new virtual environment: `python3 -m venv
-   .venv`
+3. Run `uv sync` to activate a venv and sync the dependencies
 4. Activate the virtual environment: `source .venv/bin/activate`
-5. Install the requirements: `pip install -r requirements.txt`
-6. Only for first-time deployments: `yes | pyinfra inventory.py 0-bootstrap.py
-   --ssh-user root`
-7. For the first and all subsequent deployments: `pyinfra inventory.py
-   1-base.py` and `pyinfra inventory.py 2-deploy.py`
+5. For first-time deployments: `uv run scripts/deploy_reverse_proxy.py --fresh`.
+   This executes the bootstrap script and creates a `deploy` user
+6. For subsequent deployements: `uv run scripts/deploy_reverse_proxy.py`
 
 ### Update VPS
 
-To update the VPS, for example to upgrade packages, simply run `pyinfra inventory.py 1-base.py` and `pyinfra inventory.py 2-deploy.py`. To use a new
-Ubuntu image, it's easiest to do a fresh deployment.
+To update the VPS, for example to upgrade packages, simply run `uv run
+scripts/deploy_reverse_proxy.py`. To use a new Ubuntu image, it's easiest to do
+a fresh deployment.
 
 ## Planned improvements
 - [] Provision SSH keys with Terraform
-- [] Make ports for services dynamic
 - [] Deployments through GitHub actions
 - [] Include NAS configuration as code
