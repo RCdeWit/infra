@@ -1,6 +1,6 @@
 import subprocess
 
-from find_project_root import find_project_root
+from utils.find_project_root import find_project_root
 
 PROJECT_ROOT = find_project_root()
 

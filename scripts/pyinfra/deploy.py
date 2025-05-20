@@ -1,3 +1,8 @@
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
 from pyinfra import host
 from pyinfra.operations import apt, files, server, systemd
 from utils.find_project_root import find_project_root

@@ -1,6 +1,7 @@
 from pathlib import Path
 from pyinfra.operations import server, files
 
+
 server.user(
     name="Create deployment user",
     user="deploy",
@@ -12,7 +13,7 @@ server.user(
 )
 
 files.put(
-    src="config/bootstrap/sudoers",
+    src="sudoers",
     dest="/etc/sudoers",
 )
 
