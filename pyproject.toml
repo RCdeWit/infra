@@ -1,0 +1,9 @@
+[project]
+name = "infra"
+version = "0.1.0"
+description = Repository containing the infrastructure-as-code (IaC) for my personal stack
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pyyaml>=6.0.2",
+]
