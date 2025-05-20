@@ -1,5 +1,11 @@
-photos.rcdw.nl {
-        reverse_proxy 100.69.133.120:2283 {
+calendar.rcdw.nl {
+        reverse_proxy 100.69.133.120:5232 {
+                header_up Host {http.reverse_proxy.upstream.hostport}
+        }
+}
+
+drive.rcdw.nl {
+        reverse_proxy 100.69.133.120:5068 {
                 header_up Host {http.reverse_proxy.upstream.hostport}
         }
 }
@@ -10,14 +16,8 @@ karakeep.rcdw.nl {
         }
 }
 
-calendar.rcdw.nl {
-        reverse_proxy 100.69.133.120:5232 {
-                header_up Host {http.reverse_proxy.upstream.hostport}
-        }
-}
-
-drive.rcdw.nl {
-        reverse_proxy 100.69.133.120:5068 {
+photos.rcdw.nl {
+        reverse_proxy 100.69.133.120:2283 {
                 header_up Host {http.reverse_proxy.upstream.hostport}
         }
 }
