@@ -1,5 +1,8 @@
 from pyinfra import host
 from pyinfra.operations import apt, files, server, systemd
+from utils.find_project_root import find_project_root
+
+PROJECT_ROOT = find_project_root()
 
 apt.key(
     name="Add the Caddy apt gpg key",
@@ -30,7 +33,7 @@ server.shell(
 files.put(
     name="Copy Caddy configuration to VPS",
     _sudo=True,
-    src="..config/deploy/Caddyfile",
+    src=f"{PROJECT_ROOT}/configs/generated/Caddyfile",
     dest="/etc/caddy/Caddyfile",
     assume_exists=True,
     user="deploy",
