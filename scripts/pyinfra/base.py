@@ -37,6 +37,6 @@ server.shell(
 
 server.shell(
     name="Add VPS to tailnet and authorize using auth key",
-    commands=[f"tailscale up --authkey={os.environ['TAILSCALE_AUTH_KEY']}"],
+    commands=[f"tailscale up --authkey={os.environ['TAILSCALE_AUTH_KEY']} --advertise-tags=tag:reverse-proxy"],
     _sudo=True
 )

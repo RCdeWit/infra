@@ -60,7 +60,8 @@ different stages in the deployement.
 4. Activate the virtual environment: `source .venv/bin/activate`
 5. For first-time deployments: `uv run scripts/deploy_reverse_proxy.py --fresh`.
    This executes the bootstrap script and creates a `deploy` user
-6. For subsequent deployements: `uv run scripts/deploy_reverse_proxy.py`
+6. Approve the `reverse-proxy` tag in the Tailscale console
+7. For subsequent deployements: `uv run scripts/deploy_reverse_proxy.py`
 
 ### Update VPS
 
