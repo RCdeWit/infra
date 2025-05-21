@@ -10,17 +10,6 @@ variable "default_tags" {
   default     = ["tf_managed"]
 }
 
-variable "digitalocean_token" {
-  type        = string
-  description = "export TF_VAR_digitalocean_token=<personal_access_token>"
-}
-
-variable "digitalocean_ssh_key_id" {
-  type        = string
-  description = "List of Digital Ocean IDs for SSH keys"
-  default     = "41281998"
-}
-
 variable "hcloud_token" {
   type        = string
   description = "Hetzner Cloud token"
