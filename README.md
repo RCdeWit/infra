@@ -1,8 +1,8 @@
 # Infra
 
 Repository containing the infrastructure-as-code (IaC) for my personal stack. It
-uses Terrafrom to provision cloud resources on Digital Ocean, and Pyinfra to
-configure those resources. Networking is managed through Tailscale.
+uses Terrafrom to provision cloud resources on Hetzner, and Pyinfra to configure
+those resources. Networking is managed through Tailscale.
 
 What's included?
 - Reverse proxy to NAS
@@ -13,7 +13,7 @@ What's included?
 ### Prerequisites
 
 - S3 bucket for Terraform state
-- Digital Ocean account
+- Hetzner account
 - Tailscale account and Tailnet
 
 ### Generate config files
@@ -32,25 +32,20 @@ Terraform and Pyinfra rely config files that are based on
 3. From the `terraform` directory, run `terraform init
    -backend-config=backend.tfvars`
 
-### Provision Digital Ocean resources
+### Provision Hetzner resources
 
-1. Create a personal access token (PAT) on Digital Ocean (DO)
-2. Install the DO CLI: `brew instal doctl`
-3. Add an SSH key to your DO account and copy the public key to
-   `config/id_rsa.pub`
-4. Retrieve the SSH key ID with `doctl compute ssh-key list`
-5. Set the appropriate environment variables in `configs/.env` and source them;
-   take a look at `.config/.env.example` for an example.
-6. From the `terraform` directory, deploy with `terraform apply`
+1. Create access tokens for Hetzner Cloud and Hetzner DNS
+2. Set the appropriate environment variables in `configs/.env` and source them;
+   take a look at `.configs/.env.example` for an example.
+3. From the `terraform` directory, deploy with `terraform apply`
 
 ### Configure VPS
 
 This project uses PyInfra to manage the provisioned resources in an imperative
-manner. `scripts/deploy_reverse_proxt.py` provides a wrapper script for the
+manner. `scripts/deploy_reverse_proxy.py` provides a wrapper script for the
 different stages in the deployement.
 
-1. Create a [Tailscale auth
-   key](https://login.tailscale.com/admin/settings/keys). Apply the following
+1. Create a [Tailscale auth key](https://login.tailscale.com/admin/settings/keys). Apply the following
    settings:
     - Reusable: `True`
     - Ephemeral: `True`
@@ -59,7 +54,8 @@ different stages in the deployement.
 3. Run `uv sync` to activate a venv and sync the dependencies
 4. Activate the virtual environment: `source .venv/bin/activate`
 5. For first-time deployments: `uv run scripts/deploy_reverse_proxy.py --fresh`.
-   This executes the bootstrap script and creates a `deploy` user
+   This executes the bootstrap script and creates a `deploy` user before running
+   the `base` and `deploy` steps.
 6. Approve the `reverse-proxy` tag in the Tailscale console
 7. For subsequent deployements: `uv run scripts/deploy_reverse_proxy.py`
 
@@ -70,6 +66,5 @@ scripts/deploy_reverse_proxy.py`. To use a new Ubuntu image, it's easiest to do
 a fresh deployment.
 
 ## Planned improvements
-- [] Provision SSH keys with Terraform
 - [] Deployments through GitHub actions
 - [] Include NAS configuration as code
