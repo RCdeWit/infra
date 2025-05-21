@@ -22,9 +22,21 @@ variable "digitalocean_ssh_key_id" {
 }
 
 variable "hcloud_token" {
-  type      = string
+  type        = string
   description = "Hetzner Cloud token"
-  sensitive = true
+  sensitive   = true
+}
+
+variable "hetznerdns_token" {
+  type        = string
+  description = "Hetzner DNS API token"
+  sensitive   = true
+}
+
+variable "hetzner_deployment_ssh_key" {
+  type        = string
+  description = "Public key for deployments on Hetzner"
+  default     = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKqW4FJAEMSn4BSX0fKQtvBdNH9qFRZbn5ra4Ckb1Qhs"
 }
 
 variable "tailscale_api_key" {

@@ -11,14 +11,14 @@ terraform {
   }
 
   required_providers {
-    digitalocean = {
-      source  = "digitalocean/digitalocean"
-      version = "2.36.0"
-    }
-
     hcloud = {
       source  = "hetznercloud/hcloud"
       version = "~> 1.45"
+    }
+
+    hetznerdns = {
+      source  = "germanbrew/hetznerdns"
+      version = "3.4.3"
     }
 
     tailscale = {
@@ -28,12 +28,12 @@ terraform {
   }
 }
 
-provider "digitalocean" {
-  token = var.digitalocean_token
-}
-
 provider "hcloud" {
   token = var.hcloud_token
+}
+
+provider "hetznerdns" {
+  api_token = var.hetznerdns_token
 }
 
 provider "tailscale" {
