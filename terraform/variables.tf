@@ -10,6 +10,12 @@ variable "default_tags" {
   default     = ["tf_managed"]
 }
 
+variable "domain" {
+  type        = string
+  description = "Domain to be used for reverse proxy and DNS records"
+  default     = "rcdw.nl"
+}
+
 variable "hcloud_token" {
   type        = string
   description = "Hetzner Cloud token"

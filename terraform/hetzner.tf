@@ -16,7 +16,7 @@ resource "hcloud_server" "vps_reverse_proxy" {
 }
 
 resource "hetznerdns_zone" "rcdw_nl" {
-  name = "rcdw.nl"
+  name = var.domain
   ttl  = 3600
 }
 
