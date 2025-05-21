@@ -3,13 +3,13 @@ from pyinfra.operations import server, files
 
 
 server.user(
-    name="Create deployment user",
+    name="Create deploy user",
     user="deploy",
     password=None,
-    system=True,
     create_home=True,
     home="/home/deploy",
     groups=["sudo"],
+    _sudo=True,
 )
 
 files.put(
@@ -17,8 +17,14 @@ files.put(
     dest="/etc/sudoers",
 )
 
-files.put(
-    src=Path.home() / ".ssh/id_rsa.pub",
-    dest="/home/deploy/.ssh/authorized_keys",
-    user="deploy",
+server.shell(
+    name="Authorize root SSH keys for deploy user",
+    commands=[
+        "mkdir -p /home/deploy/.ssh",
+        "cp /root/.ssh/authorized_keys /home/deploy/.ssh/authorized_keys",
+        "chown -R deploy:deploy /home/deploy/.ssh",
+        "chmod 700 /home/deploy/.ssh",
+        "chmod 600 /home/deploy/.ssh/authorized_keys",
+    ],
+    _sudo=True,
 )

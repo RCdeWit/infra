@@ -3,6 +3,7 @@ import os
 import subprocess
 import argparse
 from pathlib import Path
+from pyinfra import config
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 PYINFRA_DIR = SCRIPT_DIR / "pyinfra"
@@ -10,16 +11,18 @@ INVENTORY = PYINFRA_DIR / "inventory.py"
 
 def run_pyinfra(script_name, ssh_user=None, auto_approve=False):
     env = os.environ.copy()
-    if ssh_user:
-        env["SSH_USER"] = ssh_user
 
     script_path = PYINFRA_DIR / script_name
     command = ["pyinfra"]
     if auto_approve:
         command.append("-y")
+    if ssh_user:
+        command.extend(['--user', ssh_user])
+
     command.extend([str(INVENTORY), str(script_path)])
 
     print(f"▶ Running: {' '.join(command)}")
+    print()
     subprocess.run(command, cwd=PYINFRA_DIR, env=env, check=True)
 
 def main():
