@@ -16,6 +16,11 @@ terraform {
       version = "2.36.0"
     }
 
+    hcloud = {
+      source  = "hetznercloud/hcloud"
+      version = "~> 1.45"
+    }
+
     tailscale = {
       source  = "tailscale/tailscale"
       version = "0.15.0"
@@ -23,9 +28,12 @@ terraform {
   }
 }
 
-# Configure the DigitalOcean Provider
 provider "digitalocean" {
   token = var.digitalocean_token
+}
+
+provider "hcloud" {
+  token = var.hcloud_token
 }
 
 provider "tailscale" {

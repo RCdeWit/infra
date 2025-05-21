@@ -21,6 +21,12 @@ variable "digitalocean_ssh_key_id" {
   default     = "41281998"
 }
 
+variable "hcloud_token" {
+  type      = string
+  description = "Hetzner Cloud token"
+  sensitive = true
+}
+
 variable "tailscale_api_key" {
   type        = string
   description = "API key for Tailscale"
