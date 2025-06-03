@@ -35,3 +35,10 @@ resource "hetznerdns_record" "letsencrypt" {
   name    = "@"
   value   = "0 issue \"letsencrypt.org\""
 }
+
+resource "hetznerdns_record" "githubpages" {
+  zone_id = hetznerdns_zone.rcdw_nl.id
+  type    = "TXT"
+  name    = "_github-pages-challenge-RCdeWit"
+  value   = "dd5dc319f009f7e36ee11956a6f880"
+}
