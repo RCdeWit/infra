@@ -1,0 +1,96 @@
+name: Deploy Infra
+run-name: Deployment for ${{ github.sha }}
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      PYINFRA_INVENTORY: scripts/pyinfra/inventory.py
+      PYINFRA_CONFIG: scripts/pyinfra/config.py
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.8.5
+
+      - name: Install uv
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+      - name: Write environment variables
+        run: |
+          cat <<EOF > configs/.env
+          TAILSCALE_AUTH_KEY=${{ secrets.TAILSCALE_AUTH_KEY }}
+          HETZNER_CLOUD_TOKEN=${{ secrets.HETZNER_CLOUD_TOKEN }}
+          HETZNER_DNS_TOKEN=${{ secrets.HETZNER_DNS_TOKEN }}
+          UPSTREAM_IP=${{ secrets.UPSTREAM_IP }}
+          EOF
+
+      - name: Write Terraform backend config
+        run: |
+          cat <<EOF > terraform/backend.tfvars
+          access_key = "${{ secrets.TF_S3_ACCESS_KEY }}"
+          secret_key = "${{ secrets.TF_S3_SECRET_KEY }}"
+          endpoint   = "${{ secrets.TF_S3_ENDPOINT }}"
+          bucket     = "${{ secrets.TF_S3_BUCKET }}"
+          region     = "${{ secrets.TF_S3_REGION }}"
+          EOF
+
+      - name: Initialize Terraform
+        working-directory: terraform
+        run: terraform init -backend-config=backend.tfvars
+
+      - name: Apply Terraform
+        working-directory: terraform
+        run: terraform apply -auto-approve
+
+      - name: Extract reverse proxy IP
+        id: tf_output
+        working-directory: terraform
+        run: |
+          ip=$(terraform output -raw reverse_proxy_droplet_ip)
+          echo "ip=$ip" >> $GITHUB_OUTPUT
+
+      - name: Determine if deployment is fresh
+        id: check_fresh
+        run: |
+          if ssh -o StrictHostKeyChecking=no -i <(echo "${{ secrets.SSH_PRIVATE_KEY }}") root@${{ steps.tf_output.outputs.ip }} 'id deploy' 2>/dev/null; then
+            echo "fresh=false" >> $GITHUB_OUTPUT
+          else
+            echo "fresh=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Sync and activate environment
+        run: |
+          uv sync
+          source .venv/bin/activate
+
+      - name: Generate config files
+        run: |
+          uv run scripts/generate_tailscale_acl.py
+          uv run scripts/generate_caddyfile.py
+
+      - name: Deploy to VPS with PyInfra
+        run: |
+          CMD="uv run scripts/deploy_reverse_proxy.py"
+          if [ "${{ steps.check_fresh.outputs.fresh }}" = "true" ]; then
+            CMD="$CMD --fresh"
+          fi
+          eval "$CMD"
