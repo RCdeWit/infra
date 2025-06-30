@@ -51,6 +51,7 @@ jobs:
           endpoint   = "${{ secrets.TF_S3_ENDPOINT }}"
           bucket     = "${{ secrets.TF_S3_BUCKET }}"
           region     = "${{ secrets.TF_S3_REGION }}"
+          key        = "infra/terraform.tfstate"
           EOF
 
       - name: Initialize Terraform
