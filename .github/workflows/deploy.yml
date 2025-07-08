@@ -53,7 +53,7 @@ jobs:
           endpoints = { s3 = "${{ vars.TF_S3_ENDPOINT }}" }
           bucket     = "${{ vars.TF_S3_BUCKET }}"
           region     = "${{ vars.TF_S3_REGION }}"
-          key        = "infra/terraform.tfstate"
+          key        = "terraform.tfstate"
           EOF
 
       - name: Initialize Terraform
