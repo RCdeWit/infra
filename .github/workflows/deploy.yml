@@ -36,10 +36,17 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Setup SSH agent
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.TF_VAR_HETZNER_DEPLOYMENT_SSH_KEY }}
+
+
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.9.5
+
       - name: Install uv
         run: |
           curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -74,7 +81,7 @@ jobs:
       - name: Determine if deployment is fresh
         id: check_fresh
         run: |
-          if ssh -o StrictHostKeyChecking=no -i <(echo "${{ secrets.SSH_PRIVATE_KEY }}") root@${{ steps.tf_output.outputs.ip }} 'id deploy' 2>/dev/null; then
+          if ssh -o StrictHostKeyChecking=no root@${{ steps.tf_output.outputs.ip }} 'id deploy' 2>/dev/null; then
             echo "fresh=false" >> $GITHUB_OUTPUT
           else
             echo "fresh=true" >> $GITHUB_OUTPUT
