@@ -67,9 +67,27 @@ jobs:
         working-directory: terraform
         run: terraform init -backend-config=backend.tfvars
 
+      - name: Validate Terraform
+        working-directory: terraform
+        run: |
+          terraform fmt -check
+          terraform validate
+
       - name: Apply Terraform
         working-directory: terraform
         run: terraform apply -auto-approve
+
+      - name: Store Terraform outputs
+        run: |
+          terraform output -json > terraform-outputs.json
+        working-directory: terraform
+
+      - name: Upload outputs as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform-outputs
+          path: terraform/terraform-outputs.json
+          retention-days: 30
 
       - name: Extract reverse proxy IP
         id: tf_output
