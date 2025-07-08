@@ -96,7 +96,20 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ steps.tf_output.outputs.ip }} >> ~/.ssh/known_hosts
+
+          # Retry ssh-keyscan with backoff
+          for i in {1..10}; do
+            if ssh-keyscan -H ${{ steps.tf_output.outputs.ip }} >> ~/.ssh/known_hosts 2>/dev/null; then
+              echo "Successfully retrieved host keys"
+              break
+            fi
+            echo "Attempt $i failed, retrying in $((i * 2)) seconds..."
+            sleep $((i * 2))
+            if [ $i -eq 10 ]; then
+              echo "Failed to retrieve host keys after 10 attempts"
+              exit 1
+            fi
+          done
 
       - name: Determine if deployment is fresh
         id: check_fresh
