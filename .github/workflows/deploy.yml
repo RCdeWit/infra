@@ -41,7 +41,7 @@ jobs:
           TAILSCALE_AUTH_KEY=${{ secrets.TAILSCALE_AUTH_KEY }}
           HETZNER_CLOUD_TOKEN=${{ secrets.HETZNER_CLOUD_TOKEN }}
           HETZNER_DNS_TOKEN=${{ secrets.HETZNER_DNS_TOKEN }}
-          UPSTREAM_IP=${{ secrets.UPSTREAM_IP }}
+          UPSTREAM_IP=${{ vars.UPSTREAM_IP }}
           EOF
 
       - name: Write Terraform backend config
@@ -49,9 +49,9 @@ jobs:
           cat <<EOF > terraform/backend.tfvars
           access_key = "${{ secrets.TF_S3_ACCESS_KEY }}"
           secret_key = "${{ secrets.TF_S3_SECRET_KEY }}"
-          endpoint   = "${{ secrets.TF_S3_ENDPOINT }}"
-          bucket     = "${{ secrets.TF_S3_BUCKET }}"
-          region     = "${{ secrets.TF_S3_REGION }}"
+          endpoints = { s3 = "${{ vars.TF_S3_ENDPOINT }}" }
+          bucket     = "${{ vars.TF_S3_BUCKET }}"
+          region     = "${{ vars.TF_S3_REGION }}"
           key        = "infra/terraform.tfstate"
           EOF
 
