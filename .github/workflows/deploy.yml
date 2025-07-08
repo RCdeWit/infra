@@ -15,8 +15,17 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
+      PROJECT_ROOT: ${PWD}
       PYINFRA_INVENTORY: scripts/pyinfra/inventory.py
       PYINFRA_CONFIG: scripts/pyinfra/config.py
+      TF_VAR_domain: ${{ vars.TF_VAR_DOMAIN }}
+      TF_VAR_hcloud_token: ${{ secrets.TF_VAR_HCLOUD_TOKEN }}
+      TF_VAR_hetznerdns_token: ${{ secrets.TF_VAR_HETZNERDNS_TOKEN }}
+      TF_VAR_hetzner_deployment_ssh_key: ${{ secrets.TF_VAR_HETZNER_DEPLOYMENT_SSH_KEY }}
+      TF_VAR_tailscale_api_key: ${{ secrets.TF_VAR_TAILSCALE_API_KEY }}
+      TF_VAR_tailnet: ${{ secrets.TF_VAR_TAILNET }}
+      TAILSCALE_AUTH_KEY: ${{ secrets.TAILSCALE_AUTH_KEY }}
+      UPSTREAM_IP: ${{ vars.UPSTREAM_IP }}
 
     steps:
       - name: Checkout repository
@@ -35,20 +44,6 @@ jobs:
         run: |
           curl -LsSf https://astral.sh/uv/install.sh | sh
           echo "$HOME/.cargo/bin" >> $GITHUB_PATH
-
-      - name: Write environment variables
-        run: |
-          cat <<EOF > configs/.env
-          PROJECT_ROOT=${PWD}
-          TF_VAR_domain = ${{ vars.TF_VAR_DOMAIN }}
-          TF_VAR_hcloud_token = ${{ secrets.TF_VAR_HCLOUD_TOKEN }}
-          TF_VAR_hetznerdns_token = ${{ secrets.TF_VAR_HETZNERDNS_TOKEN }}
-          TF_VAR_hetzner_deployment_ssh_key = ${{ secrets.TF_VAR_HETZNER_DEPLOYMENT_SSH_KEY }}
-          TF_VAR_tailscale_api_key = ${{ secrets.TF_VAR_TAILSCALE_API_KEY }}
-          TF_VAR_tailnet = ${{ secrets.TF_VAR_TAILNET }}
-          TAILSCALE_AUTH_KEY=${{ secrets.TAILSCALE_AUTH_KEY }}
-          UPSTREAM_IP=${{ vars.UPSTREAM_IP }}
-          EOF
 
       - name: Write Terraform backend config
         run: |
