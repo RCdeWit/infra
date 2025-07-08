@@ -60,6 +60,9 @@ jobs:
         working-directory: terraform
         run: terraform init -backend-config=backend.tfvars
 
+      - name: Debug env
+        run: env | grep TF_VAR
+
       - name: Apply Terraform
         working-directory: terraform
         run: terraform apply -auto-approve
