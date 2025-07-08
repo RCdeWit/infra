@@ -1,5 +1,7 @@
 # Infra
 
+[![Deploy Infra](https://github.com/RCdeWit/infra/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/RCdeWit/infra/actions/workflows/deploy.yml)
+
 Repository containing the infrastructure-as-code (IaC) for my personal stack. It
 uses Terrafrom to provision cloud resources on Hetzner, and Pyinfra to configure
 those resources. Networking is managed through Tailscale.
