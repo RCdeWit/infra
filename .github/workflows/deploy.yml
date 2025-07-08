@@ -132,7 +132,7 @@ jobs:
 
       - name: Deploy to VPS with PyInfra
         run: |
-          CMD="uv run scripts/deploy_reverse_proxy.py"
+          CMD="uv run scripts/deploy_reverse_proxy.py --auto-approve"
           if [ "${{ steps.check_fresh.outputs.fresh }}" = "true" ]; then
             CMD="$CMD --fresh"
           fi
