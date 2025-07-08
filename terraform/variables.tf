@@ -28,15 +28,15 @@ variable "hetznerdns_token" {
   sensitive   = true
 }
 
-variable "hetzner_deployment_ssh_key" {
+variable "ssh_key_deployment_public" {
   type        = string
   description = "Public key for deployments on Hetzner"
-  default     = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKqW4FJAEMSn4BSX0fKQtvBdNH9qFRZbn5ra4Ckb1Qhs"
 }
 
 variable "tailscale_api_key" {
   type        = string
   description = "API key for Tailscale"
+  sensitive   = true
 }
 
 variable "tailnet" {

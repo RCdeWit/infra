@@ -1,6 +1,6 @@
 resource "hcloud_ssh_key" "main" {
   name       = "hetzner-deployment-key"
-  public_key = var.hetzner_deployment_ssh_key
+  public_key = var.ssh_key_deployment_public
 }
 
 resource "hcloud_server" "vps_reverse_proxy" {

@@ -21,7 +21,8 @@ jobs:
       TF_VAR_domain: ${{ vars.TF_VAR_DOMAIN }}
       TF_VAR_hcloud_token: ${{ secrets.TF_VAR_HCLOUD_TOKEN }}
       TF_VAR_hetznerdns_token: ${{ secrets.TF_VAR_HETZNERDNS_TOKEN }}
-      TF_VAR_hetzner_deployment_ssh_key: ${{ secrets.TF_VAR_HETZNER_DEPLOYMENT_SSH_KEY }}
+      TF_VAR_ssh_key_deployment_public: ${{ vars.TF_VAR_SSH_KEY_DEPLOYMENT_PUBLIC}}
+      TF_VAR_ssh_key_deployment_private: ${{ secrets.TF_VAR_SSH_KEY_DEPLOYMENT_PRIVATE }}
       TF_VAR_tailscale_api_key: ${{ secrets.TF_VAR_TAILSCALE_API_KEY }}
       TF_VAR_tailnet: ${{ vars.TF_VAR_TAILNET }}
       TAILSCALE_AUTH_KEY: ${{ secrets.TAILSCALE_AUTH_KEY }}
@@ -91,7 +92,7 @@ jobs:
       - name: Setup SSH agent
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.TF_VAR_HETZNER_DEPLOYMENT_SSH_KEY }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.TF_VAR_SSH_KEY_DEPLOYMENT_PRIVATE }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/id_rsa
