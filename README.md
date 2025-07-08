@@ -68,5 +68,4 @@ scripts/deploy_reverse_proxy.py`. To use a new Ubuntu image, it's easiest to do
 a fresh deployment.
 
 ## Planned improvements
-- [] Deployments through GitHub actions
-- [] Include NAS configuration as code
+- [ ] Include NAS configuration as code
