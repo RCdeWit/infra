@@ -36,16 +36,6 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Setup SSH agent
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.TF_VAR_HETZNER_DEPLOYMENT_SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          eval "$(ssh-agent -s)"
-          ssh-add ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ steps.tf_output.outputs.ip }} >> ~/.ssh/known_hosts
-
-
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v3
         with:
@@ -99,6 +89,15 @@ jobs:
         run: |
           ip=$(terraform output -raw reverse_proxy_droplet_ip)
           echo "ip=$ip" >> $GITHUB_OUTPUT
+
+      - name: Setup SSH agent
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.TF_VAR_HETZNER_DEPLOYMENT_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ steps.tf_output.outputs.ip }} >> ~/.ssh/known_hosts
 
       - name: Determine if deployment is fresh
         id: check_fresh
