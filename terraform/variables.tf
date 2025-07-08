@@ -1,7 +1,7 @@
 variable "environment" {
   type        = string
   description = "Environment in which to deploy resources"
-  default     = "production"
+  default     = "prod"
 }
 
 variable "default_tags" {
