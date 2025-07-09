@@ -26,7 +26,9 @@ def main():
         domain = f"{subdomain}.{DOMAIN_SUFFIX}"
         lines.append(f"""{domain} {{
     reverse_proxy {UPSTREAM_IP}:{port} {{
-        header_up Host {{http.reverse_proxy.upstream.hostport}}
+        header_up Host {subdomain}.{DOMAIN_SUFFIX}
+        header_up X-Forwarded-Host {subdomain}.{DOMAIN_SUFFIX}
+        header_up X-Forwarded-Proto https
     }}
 }}\n""")
 
