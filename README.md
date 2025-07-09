@@ -59,7 +59,7 @@ different stages in the deployement.
    This executes the bootstrap script and creates a `deploy` user before running
    the `base` and `deploy` steps.
 6. Approve the `reverse-proxy` tag in the Tailscale console
-7. For subsequent deployements: `uv run scripts/deploy_reverse_proxy.py`
+7. For subsequent deployments: `uv run scripts/deploy_reverse_proxy.py`
 
 ### Update VPS
 

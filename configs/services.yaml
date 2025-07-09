@@ -3,4 +3,5 @@ services:
   drive: 5068
   id: 3232
   karakeep: 3000
+  paperless: 8010
   photos: 2283
