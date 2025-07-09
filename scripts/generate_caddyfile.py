@@ -30,6 +30,7 @@ def main():
     }}
 }}\n""")
 
+    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)  # Ensure directory exists
     OUTPUT_PATH.write_text("".join(lines))
     print(f"✅ Caddyfile generated at {OUTPUT_PATH}")
 
