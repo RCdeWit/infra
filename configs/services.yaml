@@ -1,6 +1,16 @@
 services:
-  drive: 5068
-  id: 3232
-  karakeep: 3000
-  paperless: 8010
-  photos: 2283
+  drive:
+    port: 5068
+    host_header: upstream
+  id:
+    port: 3232
+    host_header: domain
+  karakeep:
+    port: 3000
+    host_header: domain
+  paperless:
+    port: 8010
+    host_header: domain
+  photos:
+    port: 2283
+    host_header: domain

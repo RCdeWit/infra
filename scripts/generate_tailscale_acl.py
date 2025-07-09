@@ -3,7 +3,6 @@ import os
 import sys
 import yaml
 import json
-from pathlib import Path
 from utils.find_project_root import find_project_root
 
 PROJECT_ROOT = find_project_root()
@@ -22,7 +21,8 @@ def main():
 
     # Build a block of JSON with inline comments
     dst_lines = []
-    for domain, port in sorted(services.items(), key=lambda x: x[1]):
+    for domain, service_config in sorted(services.items(), key=lambda x: x[1]["port"]):
+        port = service_config["port"]
         label = domain.split(".")[0].capitalize()
         dst_lines.append(f'        // {label}')
         dst_lines.append(f'        "tag:nas:{port}",')
