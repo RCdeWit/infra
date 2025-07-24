@@ -18,6 +18,27 @@ def get_host_header(subdomain, config):
         return "{http.reverse_proxy.upstream.hostport}"
     return f"{subdomain}.{DOMAIN_SUFFIX}"
 
+def generate_private_block(domain, port, headers):
+    header_lines = "\n        ".join(headers)
+    return f"""{domain} {{
+    @tailnet remote_ip 100.64.0.0/10
+    @notailnet not remote_ip 100.64.0.0/10
+
+    respond @notailnet "" 403
+
+    reverse_proxy @tailnet {UPSTREAM_IP}:{port} {{
+        {header_lines}
+    }}
+}}\n"""
+
+def generate_public_block(domain, port, headers):
+    header_lines = "\n        ".join(headers)
+    return f"""{domain} {{
+    reverse_proxy {UPSTREAM_IP}:{port} {{
+        {header_lines}
+    }}
+}}\n"""
+
 def main():
     if not UPSTREAM_IP:
         print("Error: UPSTREAM_IP environment variable is not set", file=sys.stderr)
@@ -53,25 +74,10 @@ def main():
                 ]
 
         domain = f"{subdomain}.{DOMAIN_SUFFIX}"
-        header_lines = "\n        ".join(headers)
-
         if public:
-            block = f"""{domain} {{
-    reverse_proxy {UPSTREAM_IP}:{port} {{
-        {header_lines}
-    }}
-}}\n"""
+            block = generate_public_block(domain, port, headers)
         else:
-            block = f"""{domain} {{
-    @tailnet remote_ip 100.64.0.0/10
-    @notailnet not remote_ip 100.64.0.0/10
-
-    respond @notailnet "" 444
-
-    reverse_proxy @tailnet {UPSTREAM_IP}:{port} {{
-        {header_lines}
-    }}
-}}\n"""
+            block = generate_private_block(domain, port, headers)
 
         lines.append(block)
 
