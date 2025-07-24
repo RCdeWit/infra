@@ -2,15 +2,20 @@ services:
   drive:
     port: 5068
     host_header: upstream
+    public: true
   id:
     port: 3232
     host_header: domain
+    public: true
   karakeep:
     port: 3000
     host_header: domain
+    public: true
   paperless:
     port: 8010
     host_header: domain
+    public: false
   photos:
     port: 2283
     host_header: domain
+    public: true

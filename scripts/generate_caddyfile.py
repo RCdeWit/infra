@@ -30,9 +30,9 @@ def main():
     lines = []
 
     for subdomain, service_config in config["services"].items():
-        # Handle both old format (int) and new format (dict)
         if isinstance(service_config, int):
             port = service_config
+            public = True
             host_header = f"{subdomain}.{DOMAIN_SUFFIX}"
             headers = [
                 f"header_up Host {host_header}",
@@ -41,6 +41,7 @@ def main():
             ]
         else:
             port = service_config["port"]
+            public = service_config.get("public", True)
             host_header = get_host_header(subdomain, service_config)
             if service_config.get("host_header") == "upstream":
                 headers = [f"header_up Host {host_header}"]
@@ -53,11 +54,26 @@ def main():
 
         domain = f"{subdomain}.{DOMAIN_SUFFIX}"
         header_lines = "\n        ".join(headers)
-        lines.append(f"""{domain} {{
+
+        if public:
+            block = f"""{domain} {{
     reverse_proxy {UPSTREAM_IP}:{port} {{
         {header_lines}
     }}
-}}\n""")
+}}\n"""
+        else:
+            block = f"""{domain} {{
+    @tailnet remote_ip 100.64.0.0/10
+    @notailnet not remote_ip 100.64.0.0/10
+
+    respond @notailnet "" 444
+
+    reverse_proxy @tailnet {UPSTREAM_IP}:{port} {{
+        {header_lines}
+    }}
+}}\n"""
+
+        lines.append(block)
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_PATH.write_text("".join(lines))
