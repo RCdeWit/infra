@@ -2,7 +2,11 @@ services:
   drive:
     port: 5068
     host_header: upstream
-    public: true
+    public: false
+  homarr:
+    port: 7575
+    host_header: domain
+    public: false
   id:
     port: 3232
     host_header: domain
@@ -19,3 +23,7 @@ services:
     port: 2283
     host_header: domain
     public: true
+  portainer:
+    port: 9696
+    host_header: domain
+    public: false
