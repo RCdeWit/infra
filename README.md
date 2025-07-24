@@ -7,6 +7,7 @@ uses Terrafrom to provision cloud resources on Hetzner, and Pyinfra to configure
 those resources. Networking is managed through Tailscale.
 
 What's included?
+
 - Reverse proxy to NAS
 - Tailscale ACLs
 
@@ -32,7 +33,7 @@ Terraform and Pyinfra rely config files that are based on
    [Tigris](https://console.tigris.dev))
 2. Create an access key and add the credentials to `terraform/backend.tfvars`
 3. From the `terraform` directory, run `terraform init
-   -backend-config=backend.tfvars`
+-backend-config=backend.tfvars`
 
 ### Provision Hetzner resources
 
@@ -49,9 +50,9 @@ different stages in the deployement.
 
 1. Create a [Tailscale auth key](https://login.tailscale.com/admin/settings/keys). Apply the following
    settings:
-    - Reusable: `True`
-    - Ephemeral: `True`
-    - Tags: `tag:reverse-proxy`
+   - Reusable: `True`
+   - Ephemeral: `True`
+   - Tags: `tag:reverse-proxy`
 2. Add the auth key to `config/.env` and source it.
 3. Run `uv sync` to activate a venv and sync the dependencies
 4. Activate the virtual environment: `source .venv/bin/activate`
@@ -68,4 +69,5 @@ scripts/deploy_reverse_proxy.py`. To use a new Ubuntu image, it's easiest to do
 a fresh deployment.
 
 ## Planned improvements
+
 - [ ] Include NAS configuration as code

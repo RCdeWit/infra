@@ -16,9 +16,7 @@
       "dst": "__REVERSE_PROXY_DST__"
     }
   ],
-  "nodeAttrs": [
-    {"target": ["__UPSTREAM_IP__"], "attr": ["mullvad"]}
-  ],
+  "nodeAttrs": [{ "target": ["__UPSTREAM_IP__"], "attr": ["mullvad"] }],
   "tests": [
     {
       "src": "tag:reverse-proxy",
