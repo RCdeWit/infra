@@ -8,7 +8,6 @@ on:
   workflow_dispatch:
 
 permissions:
-  read-all: true
   contents: write
 
 jobs:
@@ -149,8 +148,9 @@ jobs:
           eval "$CMD"
 
       - name: Get the VPS's internal Tailnet IP and update repository variable
+        working-directory: scripts/pyinfra
         run: |
-          pyinfra inventory.py get_ip.py > output.log
+          pyinfra inventory.py get_tailnet_ip.py > output.log
           TAILNET_IP=$(grep '::set-output name=tailnet_ip' output.log | cut -d ':' -f 4)
 
           # Update repository variable for future runs
