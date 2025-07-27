@@ -21,12 +21,27 @@ resource "hetznerdns_zone" "rcdw_nl" {
 }
 
 resource "hetznerdns_record" "subdomain_rcdw_nl" {
-  for_each = toset(keys(yamldecode(file("${path.module}/../configs/services.yaml")).services))
+  for_each = {
+    for k, v in yamldecode(file("${path.module}/../configs/services.yaml")).services :
+    k => v if v.public == true
+  }
 
   zone_id = hetznerdns_zone.rcdw_nl.id
   type    = "A"
   name    = each.key
   value   = hcloud_server.vps_reverse_proxy.ipv4_address
+}
+
+resource "hetznerdns_record" "subdomain_rcdw_nl_private" {
+  for_each = {
+    for k, v in yamldecode(file("${path.module}/../configs/services.yaml")).services :
+    k => v if v.public == false
+  }
+
+  zone_id = hetznerdns_zone.rcdw_nl.id
+  type    = "A"
+  name    = each.key
+  value   = var.vps_reverse_proxy_tailnet_ip
 }
 
 resource "hetznerdns_record" "letsencrypt" {

@@ -43,3 +43,9 @@ variable "tailnet" {
   type        = string
   description = "Tailscale tailnet name"
 }
+
+variable "vps_reverse_proxy_tailnet_ip" {
+  type        = string
+  description = "The internal Tailnet IP for the reverse proxy VPS"
+  default     = "100.99.212.12"
+}
