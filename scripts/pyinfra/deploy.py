@@ -4,6 +4,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
+from io import StringIO
+
 from pyinfra import host
 from pyinfra.operations import files, server, systemd
 from utils.find_project_root import find_project_root
@@ -54,17 +56,17 @@ files.put(
     user="deploy",
 )
 
-files.file(
+files.template(
     name="Write /etc/caddy/.env from environment variable",
-    path="/etc/caddy/.env",
-    contents=f"HETZNER_API_TOKEN={HETZNER_API_TOKEN}\n",
+    src=StringIO(f"HETZNER_API_TOKEN={HETZNER_API_TOKEN}\n"),
+    dest="/etc/caddy/.env",
     _sudo=True,
 )
 
-files.file(
+files.template(
     name="Systemd drop-in to load env file",
-    path="/etc/systemd/system/caddy.service.d/env.conf",
-    contents="[Service]\nEnvironmentFile=/etc/caddy/.env\n",
+    src=StringIO("[Service]\nEnvironmentFile=/etc/caddy/.env\n"),
+    dest="/etc/systemd/system/caddy.service.d/env.conf",
     _sudo=True,
 )
 
