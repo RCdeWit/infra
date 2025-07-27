@@ -54,17 +54,17 @@ files.put(
     user="deploy",
 )
 
-files.put(
+files.file(
     name="Write /etc/caddy/.env from environment variable",
-    dest="/etc/caddy/.env",
-    content=f"HETZNER_API_TOKEN={HETZNER_API_TOKEN}\n",
+    path="/etc/caddy/.env",
+    contents=f"HETZNER_API_TOKEN={HETZNER_API_TOKEN}\n",
     _sudo=True,
 )
 
-files.put(
+files.file(
     name="Systemd drop-in to load env file",
-    dest="/etc/systemd/system/caddy.service.d/env.conf",
-    content="[Service]\nEnvironmentFile=/etc/caddy/.env\n",
+    path="/etc/systemd/system/caddy.service.d/env.conf",
+    contents="[Service]\nEnvironmentFile=/etc/caddy/.env\n",
     _sudo=True,
 )
 
