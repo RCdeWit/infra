@@ -7,7 +7,9 @@ on:
       - main
   workflow_dispatch:
 
-permissions: read-all
+permissions:
+  read-all: true
+  contents: write
 
 jobs:
   deploy:
@@ -25,6 +27,7 @@ jobs:
       TF_VAR_ssh_key_deployment_private: ${{ secrets.TF_VAR_SSH_KEY_DEPLOYMENT_PRIVATE }}
       TF_VAR_tailscale_api_key: ${{ secrets.TF_VAR_TAILSCALE_API_KEY }}
       TF_VAR_tailnet: ${{ vars.TF_VAR_TAILNET }}
+      TF_VAR_vps_reverse_proxy_tailnet_ip : ${{ vars.TF_VAR_VPS_REVERSE_PROXY_TAILNET_IP }}
       TAILSCALE_AUTH_KEY: ${{ secrets.TAILSCALE_AUTH_KEY }}
       UPSTREAM_IP: ${{ vars.UPSTREAM_IP }}
 
@@ -144,3 +147,20 @@ jobs:
             CMD="$CMD --fresh"
           fi
           eval "$CMD"
+
+      - name: Get the VPS's internal Tailnet IP and update repository variable
+        run: |
+          pyinfra inventory.py get_ip.py > output.log
+          TAILNET_IP=$(grep '::set-output name=tailnet_ip' output.log | cut -d ':' -f 4)
+
+          # Update repository variable for future runs
+          gh variable set TF_VAR_VPS_REVERSE_PROXY_TAILNET_IP --body "$TAILNET_IP"
+
+          # Set lowercase environment variable for current run (Terraform format)
+          echo "TF_VAR_vps_reverse_proxy_tailnet_ip=$TAILNET_IP" >> $GITHUB_ENV
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Apply Terraform to update DNS of internal services
+        working-directory: terraform
+        run: terraform apply -target="hetznerdns_record.subdomain_rcdw_nl_private" -auto-approve
