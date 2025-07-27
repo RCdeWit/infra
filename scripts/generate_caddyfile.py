@@ -9,6 +9,7 @@ from utils.find_project_root import find_project_root
 PROJECT_ROOT = find_project_root()
 CONFIG_PATH = Path(f"{PROJECT_ROOT}/configs/services.yaml")
 OUTPUT_PATH = Path(f"{PROJECT_ROOT}/configs/generated/Caddyfile")
+
 UPSTREAM_IP = os.getenv("UPSTREAM_IP")
 DOMAIN_SUFFIX = os.getenv("TF_VAR_domain")
 
@@ -21,6 +22,10 @@ def get_host_header(subdomain, config):
 def generate_private_block(domain, port, headers):
     header_lines = "\n        ".join(headers)
     return f"""{domain} {{
+    tls {{
+        dns hetzner
+    }}
+
     @tailnet remote_ip 100.64.0.0/10
     @notailnet not remote_ip 100.64.0.0/10
 
@@ -74,10 +79,11 @@ def main():
                 ]
 
         domain = f"{subdomain}.{DOMAIN_SUFFIX}"
-        if public:
-            block = generate_public_block(domain, port, headers)
-        else:
-            block = generate_private_block(domain, port, headers)
+        block = (
+            generate_public_block(domain, port, headers)
+            if public else
+            generate_private_block(domain, port, headers)
+        )
 
         lines.append(block)
 
