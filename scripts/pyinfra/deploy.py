@@ -11,7 +11,7 @@ from utils.find_project_root import find_project_root
 PROJECT_ROOT = find_project_root()
 
 CADDY_URL = "https://caddyserver.com/api/download?os=linux&arch=amd64&p=github.com%2Fcaddy-dns%2Fhetzner"
-HETZNER_API_TOKEN = os.environ["TF_VAR_HETZNERDNS_TOKEN"]
+HETZNER_API_TOKEN = os.environ["TF_VAR_hetznerdns_token"]
 
 server.shell(
     name="Allow HTTP and HTTPS through Firewall",
