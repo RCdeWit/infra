@@ -26,10 +26,13 @@ def generate_private_block(domain, port, headers):
         dns hetzner {{env.HETZNER_API_TOKEN}}
     }}
 
-    reverse_proxy {UPSTREAM_IP}:{port} {{
-        bind tailscale0
+    @tailnet remote_ip 100.64.0.0/10
+
+    reverse_proxy @tailnet {UPSTREAM_IP}:{port} {{
         {header_lines}
     }}
+
+    respond 403
 }}\n"""
 
 def generate_public_block(domain, port, headers):
