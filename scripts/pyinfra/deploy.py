@@ -42,7 +42,7 @@ server.shell(
 
 files.put(
     name="Install Caddy systemd service file",
-    src=f"{PROJECT_ROOT}/configs/systemd/caddy.service",
+    src=f"{PROJECT_ROOT}/configs/templates/systemd/caddy.service",
     dest="/etc/systemd/system/caddy.service",
     _sudo=True,
 )
