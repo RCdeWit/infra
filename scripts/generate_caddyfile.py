@@ -23,7 +23,7 @@ def generate_private_block(domain, port, headers):
     header_lines = "\n        ".join(headers)
     return f"""{domain} {{
     tls {{
-        dns hetzner
+        dns hetzner {{env.HETZNER_API_TOKEN}}
     }}
 
     @tailnet remote_ip 100.64.0.0/10
