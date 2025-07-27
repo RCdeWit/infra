@@ -26,7 +26,7 @@ jobs:
       TF_VAR_ssh_key_deployment_private: ${{ secrets.TF_VAR_SSH_KEY_DEPLOYMENT_PRIVATE }}
       TF_VAR_tailscale_api_key: ${{ secrets.TF_VAR_TAILSCALE_API_KEY }}
       TF_VAR_tailnet: ${{ vars.TF_VAR_TAILNET }}
-      TF_VAR_vps_reverse_proxy_tailnet_ip : ${{ vars.TF_VAR_VPS_REVERSE_PROXY_TAILNET_IP }}
+      TF_VAR_vps_reverse_proxy_tailnet_ip: ${{ vars.TF_VAR_VPS_REVERSE_PROXY_TAILNET_IP }}
       TAILSCALE_AUTH_KEY: ${{ secrets.TAILSCALE_AUTH_KEY }}
       UPSTREAM_IP: ${{ vars.UPSTREAM_IP }}
 

@@ -2,14 +2,13 @@ repos:
   - repo: local
     hooks:
       - id: trunk-fmt
-        name: Trunk formatting
+        name: Run trunk fmt
         entry: trunk fmt
         language: system
-        types: [file]
+        always_run: true
 
       - id: terraform-validate
         name: Terraform validate
-        entry: terraform validate
+        entry: bash -c "cd terraform && terraform validate"
         language: system
-        types: [terraform]
-        working_directory: terraform
+        pass_filenames: false
