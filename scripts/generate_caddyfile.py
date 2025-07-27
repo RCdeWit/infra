@@ -26,12 +26,8 @@ def generate_private_block(domain, port, headers):
         dns hetzner {{env.HETZNER_API_TOKEN}}
     }}
 
-    @tailnet remote_ip 100.64.0.0/10
-    @notailnet not remote_ip 100.64.0.0/10
-
-    respond @notailnet "" 403
-
-    reverse_proxy @tailnet {UPSTREAM_IP}:{port} {{
+    reverse_proxy {UPSTREAM_IP}:{port} {{
+        bind tailscale0
         {header_lines}
     }}
 }}\n"""
@@ -39,6 +35,10 @@ def generate_private_block(domain, port, headers):
 def generate_public_block(domain, port, headers):
     header_lines = "\n        ".join(headers)
     return f"""{domain} {{
+    tls {{
+        dns hetzner {{env.HETZNER_API_TOKEN}}
+    }}
+
     reverse_proxy {UPSTREAM_IP}:{port} {{
         {header_lines}
     }}
