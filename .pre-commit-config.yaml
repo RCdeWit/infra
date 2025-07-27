@@ -1,0 +1,15 @@
+repos:
+  - repo: local
+    hooks:
+      - id: trunk-fmt
+        name: Trunk formatting
+        entry: trunk fmt
+        language: system
+        types: [file]
+
+      - id: terraform-validate
+        name: Terraform validate
+        entry: terraform validate
+        language: system
+        types: [terraform]
+        working_directory: terraform
