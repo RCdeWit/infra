@@ -148,10 +148,8 @@ jobs:
           eval "$CMD"
 
       - name: Get the VPS's internal Tailnet IP and update repository variable
-        working-directory: scripts/pyinfra
         run: |
-          uv run pyinfra -y inventory.py get_tailnet_ip.py > output.log
-          TAILNET_IP=$(grep '::set-output name=tailnet_ip::' output.log | cut -d ':' -f 4)
+          TAILNET_IP=$(ssh -o StrictHostKeyChecking=no root@${{ steps.tf_output.outputs.ip }} 'tailscale ip -4 | head -n 1')
 
           echo "Extracted TAILNET_IP: '$TAILNET_IP'"
 
