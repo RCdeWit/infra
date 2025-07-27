@@ -9,9 +9,30 @@ those resources. Networking is managed through Tailscale.
 What's included?
 
 - Reverse proxy to NAS
+- Hetzner DNS configuration
 - Tailscale ACLs
 
+## How to add new services
+
+The most relevant configuration file is `configs/services.yaml`. It contains entries for each service that the reverse proxy provides access to.
+
+```yaml
+services:
+  photos:
+    port: 2283
+    host_header: domain
+    public: true
+```
+
+The name of each service, e.g. `photos`, corresponds with the subdomain that will be generated, e.g. `photos.rcdw.nl`. The other options work as follows:
+
+- `port`: the port on the upstream server that exposes the service
+- `host_header`: either `domain` (default) or `upstream` (for some Synology-specific apps)
+- `public`: either `true` or `false`. If `true`, the reverse proxy will forward any traffic from the public internet. For `false`, the client must be connected to the Tailnet.
+
 ## How to deploy
+
+The GitHub Actions workflow ensures that deployments happen automatically whenever changes are merged into the `main` branch.
 
 ### Prerequisites
 
@@ -19,55 +40,103 @@ What's included?
 - Hetzner account
 - Tailscale account and Tailnet
 
-### Generate config files
+### Environment
+
+The following environment variables should be configured as repository variables in GitHub Actions (with defaults):
+
+```yaml
+PROJECT_ROOT: ${PWD}
+TF_S3_BUCKET: infra-tfstate
+TF_S3_ENDPOINT: https://fly.storage.tigris.dev
+TF_S3_REGION: auto
+TF_VAR_DOMAIN: rcdw.nl
+TF_VAR_SSH_KEY_DEPLOYMENT_PUBLIC: ssh-rsa AAA...
+TF_VAR_TAILNET: rcdewit.nl
+TF_VAR_VPS_REVERSE_PROXY_TAILNET_IP: 100.99.212.12
+UPSTREAM_IP: 100.69.133.120
+```
+
+Where the `UPSTREAM_IP` is the IP of the server that hosts the services.
+
+> [!NOTE]
+> There's a bit of a circular dependency with the `TF_VAR_VPS_REVERSE_PROXY_TAILNET_IP`, which is needed to provision the DNS records to the reverse proxy. The actual IP is only known once the VPS comes online in the Tailnet, however, The GitHub Actions Workflow contains steps to extract the internal IP and reprovision the DNS records accordingly.
+
+The following secrets are also required:
+
+```yaml
+GH_PAT
+TAILSCALE_AUTH_KEY
+TF_S3_ACCESS_KEY
+TF_S3_SECRET_KEY
+TF_VAR_HCLOUD_TOKEN
+TF_VAR_HETZNERDNS_TOKEN
+TF_VAR_SSH_KEY_DEPLOYMENT_PRIVATE
+TF_VAR_TAILSCALE_API_KEY
+```
+
+For the `TAILSCALE_AUTH_KEY, apply the following settings:
+
+- Reusable: `True`
+- Ephemeral: `True`
+- Tags: `tag:reverse-proxy`
+
+For the `GH_PAT`, limit access to this repository and grant read/write access to the following scopes:
+
+- Actions
+- Variables
+- Secrets
+
+## How to deploy manually
+
+If required, you can also follow the deployment steps manually. The instructions below mirror the steps in the GitHub Actions workflow and should work if you set the same environment variables.
+
+> [!NOTE]  
+> The pipeline configures the VPS to only accept one SSH key. If you've previously deployed from another machine or GitHub Actions, it's probably easiest to `terraform destroy` and do a fresh deployment.
+
+### 1. Generate config files
 
 Terraform and Pyinfra rely config files that are based on
 `configs/services.yaml`. To generate their required configs, run the following:
 
+0. `uv sync`
 1. `uv run scripts/generate_tailscale_acl.py`
 2. `uv run scripts/generate_caddyfile.py`
 
-### Create Terraform state and initialize
+### 2. Create Terraform state and initialize
 
 1. Create an S3 compatible bucket (e.g., using
    [Tigris](https://console.tigris.dev))
 2. Create an access key and add the credentials to `terraform/backend.tfvars`
-3. From the `terraform` directory, run `terraform init
--backend-config=backend.tfvars`
+3. From the `terraform` directory, run `terraform init -backend-config=backend.tfvars`
 
-### Provision Hetzner resources
+### 3. Provision resources
 
-1. Create access tokens for Hetzner Cloud and Hetzner DNS
-2. Set the appropriate environment variables in `configs/.env` and source them;
-   take a look at `.configs/.env.example` for an example.
-3. From the `terraform` directory, deploy with `terraform apply`
+1. From the `terraform` directory, deploy with `terraform apply`
 
-### Configure VPS
+### 4. Configure VPS
 
 This project uses PyInfra to manage the provisioned resources in an imperative
 manner. `scripts/deploy_reverse_proxy.py` provides a wrapper script for the
 different stages in the deployement.
 
-1. Create a [Tailscale auth key](https://login.tailscale.com/admin/settings/keys). Apply the following
-   settings:
-   - Reusable: `True`
-   - Ephemeral: `True`
-   - Tags: `tag:reverse-proxy`
-2. Add the auth key to `config/.env` and source it.
-3. Run `uv sync` to activate a venv and sync the dependencies
-4. Activate the virtual environment: `source .venv/bin/activate`
-5. For first-time deployments: `uv run scripts/deploy_reverse_proxy.py --fresh`.
+1. For first-time deployments: `uv run scripts/deploy_reverse_proxy.py --fresh`.
    This executes the bootstrap script and creates a `deploy` user before running
    the `base` and `deploy` steps.
-6. Approve the `reverse-proxy` tag in the Tailscale console
-7. For subsequent deployments: `uv run scripts/deploy_reverse_proxy.py`
+2. Approve the `reverse-proxy` tag in the Tailscale console
+3. For subsequent deployments: `uv run scripts/deploy_reverse_proxy.py`
+
+### 5. Find VPS's internal Tailnet IP
+
+1. Use the Tailscale console to find the internal IP for the reverse proxy
+2. Update the `TF_VAR_VPS_REVERSE_PROXY_TAILNET_IP` environment variable
+3. If needed, rerun `terraform apply` to update the DNS entries for private services
 
 ### Update VPS
 
-To update the VPS, for example to upgrade packages, simply run `uv run
-scripts/deploy_reverse_proxy.py`. To use a new Ubuntu image, it's easiest to do
-a fresh deployment.
+To update the VPS, for example to upgrade packages, simply run `uv run scripts/deploy_reverse_proxy.py`. To use a new Ubuntu image, it's easiest to do a fresh deployment.
 
 ## Planned improvements
 
+- [ ] Restructure env var names
 - [ ] Include NAS configuration as code
+- [ ] Remove circular dependency in pipeline; provision DNS records as last step
