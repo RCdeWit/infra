@@ -151,7 +151,7 @@ jobs:
         working-directory: scripts/pyinfra
         run: |
           uv run pyinfra -y inventory.py get_tailnet_ip.py > output.log
-          TAILNET_IP=$(grep '::set-output name=tailnet_ip' output.log | cut -d ':' -f 4)
+          TAILNET_IP=$(grep '::set-output name=tailnet_ip::' output.log | cut -d ':' -f 4)
 
           echo "Extracted TAILNET_IP: '$TAILNET_IP'"
 
