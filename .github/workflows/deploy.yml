@@ -16,6 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
+      GH_TOKEN: ${{ secrets.GH_PAT }}
       PROJECT_ROOT: ${PWD}
       PYINFRA_INVENTORY: scripts/pyinfra/inventory.py
       PYINFRA_CONFIG: scripts/pyinfra/config.py
