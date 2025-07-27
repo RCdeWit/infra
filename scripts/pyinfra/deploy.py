@@ -21,12 +21,11 @@ server.shell(
     _sudo=True,
 )
 
-server.shell(
+files.download(
     name="Download custom Caddy binary with Hetzner DNS plugin",
-    commands=[
-        f"curl -fsSL '{CADDY_URL}' -o /usr/local/bin/caddy",
-        "chmod +x /usr/local/bin/caddy",
-    ],
+    src=CADDY_URL,
+    dest="/usr/local/bin/caddy",
+    mode="755",
     _sudo=True,
 )
 
