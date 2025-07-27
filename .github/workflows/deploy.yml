@@ -16,7 +16,6 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      GH_TOKEN: ${{ secrets.GH_PAT }}
       PROJECT_ROOT: ${PWD}
       PYINFRA_INVENTORY: scripts/pyinfra/inventory.py
       PYINFRA_CONFIG: scripts/pyinfra/config.py
@@ -160,7 +159,7 @@ jobs:
           # Set lowercase environment variable for current run (Terraform format)
           echo "TF_VAR_vps_reverse_proxy_tailnet_ip=$TAILNET_IP" >> $GITHUB_ENV
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
 
       - name: Apply Terraform to update DNS of internal services
         working-directory: terraform
