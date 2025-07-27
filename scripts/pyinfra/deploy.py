@@ -81,7 +81,6 @@ systemd.service(
     _sudo=True,
     service="caddy",
     enabled=True,
-    running=True,
-    reloaded=True,
     restarted=True,
+    running=True,
 )
