@@ -23,9 +23,15 @@ def get_host_header(subdomain, config):
 
 def generate_ip_allow_directive():
     if not IP_ALLOW_LIST:
-        return "    respond 403"
+        return "    handle {\n        respond \"Forbidden\" 403\n    }"
+
     lines = [f"        remote_ip {ip}" for ip in IP_ALLOW_LIST]
-    return "\n    @allowed_ip {\n" + "\n".join(lines) + "\n    }\n    respond !@allowed_ip 403"
+    return (
+        "\n    @allowed_ip {\n"
+        + "\n".join(lines)
+        + "\n    }"
+        + "\n    handle !@allowed_ip {\n        respond \"Forbidden\" 403\n    }"
+    )
 
 def generate_private_block(domain, port, headers):
     header_lines = "\n        ".join(headers)
