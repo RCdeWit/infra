@@ -13,7 +13,6 @@ OUTPUT_PATH = Path(f"{PROJECT_ROOT}/configs/generated/Caddyfile")
 
 UPSTREAM_IP = os.getenv("UPSTREAM_IP")
 DOMAIN_SUFFIX = os.getenv("TF_VAR_domain")
-IP_ALLOW_LIST = ast.literal_eval(os.getenv("IP_ALLOW_LIST")) if os.getenv("IP_ALLOW_LIST") else None
 
 def get_host_header(subdomain, config):
     host_type = config.get("host_header", "domain")
@@ -21,18 +20,13 @@ def get_host_header(subdomain, config):
         return "{http.reverse_proxy.upstream.hostport}"
     return f"{subdomain}.{DOMAIN_SUFFIX}"
 
-def generate_ip_allow_directive():
-   if not IP_ALLOW_LIST:
-       return "    handle {\n        respond \"Forbidden\" 403\n    }"
-
-   allowed_ips = " ".join(IP_ALLOW_LIST)
-   return (
-       f"@notallowed not remote_ip {allowed_ips}\n"
-       f"    handle @notallowed {{\n"
-       f"        respond \"Forbidden from {{remote_host}}\" 403\n"
-       f"    }}"
-   )
-
+def generate_public_disallow_directive():
+    return (
+        f"    @publicip not remote_ip 100.64.0.0/10\n"
+        f"    handle @publicip {{\n"
+        f"        respond \"Forbidden\" 403\n"
+        f"    }}"
+    )
 
 def generate_private_block(domain, port, headers):
     header_lines = "\n        ".join(headers)
@@ -42,7 +36,7 @@ def generate_private_block(domain, port, headers):
         dns hetzner {{env.HETZNER_API_TOKEN}}
     }}
 
-    {generate_ip_allow_directive()}
+    {generate_public_disallow_directive()}
 
     reverse_proxy {UPSTREAM_IP}:{port} {{
         {header_lines}

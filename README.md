@@ -28,10 +28,10 @@ The name of each service, e.g. `photos`, corresponds with the subdomain that wil
 
 - `port`: the port on the upstream server that exposes the service
 - `host_header`: either `domain` (default) or `upstream` (for some Synology-specific apps)
-- `public`: either `true` or `false`. If `true`, the reverse proxy will forward any traffic from the public internet. For `false`, the client must be connected to the Tailnet and allow-listed with `IP_ALLOW_LIST`.
+- `public`: either `true` or `false`. If `true`, the reverse proxy will forward any traffic from the public internet. For `false`, the client must be connected to the Tailnet.
 
-> [!WARNING]
-> Private services will get a DNS record that points to the internal Tailnet IP. This can be circumvented by someone who runs their own DNS. So the reverse proxy will also check if the connecting client is on the `IP_ALLOW_LIST`.
+> [!NOTE]
+> Private services will get a DNS record that points to the internal Tailnet IP. This can be circumvented by someone who runs their own DNS. So the reverse proxy will also check if the connecting client is on the Tailnet.
 
 ## How to deploy
 
@@ -49,7 +49,6 @@ The following environment variables should be configured as repository variables
 
 ```yaml
 DOMAIN: rcdw.nl
-IP_ALLOW_LIST: ["1.1.1.1", "2.2.2.2"]
 SSH_KEY_DEPLOYMENT_PUBLIC: ssh-rsa AAA...
 TAILNET: rcdw.nl
 TF_S3_BUCKET: infra-tfstate
