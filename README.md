@@ -48,15 +48,15 @@ The GitHub Actions workflow ensures that deployments happen automatically whenev
 The following environment variables should be configured as repository variables in GitHub Actions (with defaults):
 
 ```yaml
-PROJECT_ROOT: ${PWD}
+DOMAIN: rcdw.nl
+IP_ALLOW_LIST: [1.1.1.1, 2.2.2.2]
+SSH_KEY_DEPLOYMENT_PUBLIC: ssh-rsa AAA...
+TAILNET: rcdewit.nl
 TF_S3_BUCKET: infra-tfstate
 TF_S3_ENDPOINT: https://fly.storage.tigris.dev
 TF_S3_REGION: auto
-TF_VAR_DOMAIN: rcdw.nl
-TF_VAR_SSH_KEY_DEPLOYMENT_PUBLIC: ssh-rsa AAA...
-TF_VAR_TAILNET: rcdewit.nl
-TF_VAR_VPS_REVERSE_PROXY_TAILNET_IP: 100.99.212.12
 UPSTREAM_IP: 100.69.133.120
+VPS_REVERSE_PROXY_TAILNET_IP: 100.99.212.12
 ```
 
 Where the `UPSTREAM_IP` is the IP of the server that hosts the services.
@@ -68,14 +68,13 @@ The following secrets are also required:
 
 ```yaml
 GH_PAT
-IP_ALLOW_LIST
+HCLOUD_API_TOKEN
+HETZNERDNS_TOKEN
+SSH_KEY_DEPLOYMENT_PRIVATE
+TAILSCALE_API_KEY
 TAILSCALE_AUTH_KEY
 TF_S3_ACCESS_KEY
 TF_S3_SECRET_KEY
-TF_VAR_HCLOUD_TOKEN
-TF_VAR_HETZNERDNS_TOKEN
-TF_VAR_SSH_KEY_DEPLOYMENT_PRIVATE
-TF_VAR_TAILSCALE_API_KEY
 ```
 
 For the `TAILSCALE_AUTH_KEY, apply the following settings:
@@ -92,7 +91,7 @@ For the `GH_PAT`, limit access to this repository and grant read/write access to
 
 ## How to deploy manually
 
-If required, you can also follow the deployment steps manually. The instructions below mirror the steps in the GitHub Actions workflow and should work if you set the same environment variables.
+If required, you can also follow the deployment steps manually. The instructions below mirror the steps in the GitHub Actions workflow and should work if you set the environment variables as specified in `configs/.env.example`.
 
 > [!NOTE]  
 > The pipeline configures the VPS to only accept one SSH key. If you've previously deployed from another machine or GitHub Actions, it's probably easiest to `terraform destroy` and do a fresh deployment.
@@ -144,4 +143,3 @@ To update the VPS, for example to upgrade packages, simply run `uv run scripts/d
 - [ ] Restructure env var names
 - [ ] Include NAS configuration as code
 - [ ] Remove circular dependency in pipeline; provision DNS records as last step
-- [ ] Add public IP allow-list for private services

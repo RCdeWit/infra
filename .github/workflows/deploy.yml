@@ -19,14 +19,14 @@ jobs:
       PROJECT_ROOT: ${PWD}
       PYINFRA_INVENTORY: scripts/pyinfra/inventory.py
       PYINFRA_CONFIG: scripts/pyinfra/config.py
-      TF_VAR_domain: ${{ vars.TF_VAR_DOMAIN }}
-      TF_VAR_hcloud_token: ${{ secrets.TF_VAR_HCLOUD_TOKEN }}
-      TF_VAR_hetznerdns_token: ${{ secrets.TF_VAR_HETZNERDNS_TOKEN }}
-      TF_VAR_ssh_key_deployment_public: ${{ vars.TF_VAR_SSH_KEY_DEPLOYMENT_PUBLIC}}
-      TF_VAR_ssh_key_deployment_private: ${{ secrets.TF_VAR_SSH_KEY_DEPLOYMENT_PRIVATE }}
-      TF_VAR_tailscale_api_key: ${{ secrets.TF_VAR_TAILSCALE_API_KEY }}
-      TF_VAR_tailnet: ${{ vars.TF_VAR_TAILNET }}
-      TF_VAR_vps_reverse_proxy_tailnet_ip: ${{ vars.TF_VAR_VPS_REVERSE_PROXY_TAILNET_IP }}
+      TF_VAR_domain: ${{ vars.DOMAIN }}
+      TF_VAR_hcloud_token: ${{ secrets.HCLOUD_API_TOKEN }}
+      TF_VAR_hetznerdns_token: ${{ secrets.HETZNERDNS_TOKEN }}
+      TF_VAR_ssh_key_deployment_public: ${{ vars.SSH_KEY_DEPLOYMENT_PUBLIC}}
+      TF_VAR_ssh_key_deployment_private: ${{ secrets.SSH_KEY_DEPLOYMENT_PRIVATE }}
+      TF_VAR_tailscale_api_key: ${{ secrets.TAILSCALE_API_KEY }}
+      TF_VAR_tailnet: ${{ vars.TAILNET }}
+      TF_VAR_vps_reverse_proxy_tailnet_ip: ${{ vars.VPS_REVERSE_PROXY_TAILNET_IP }}
       TAILSCALE_AUTH_KEY: ${{ secrets.TAILSCALE_AUTH_KEY }}
       UPSTREAM_IP: ${{ vars.UPSTREAM_IP }}
 
