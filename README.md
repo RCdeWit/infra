@@ -28,7 +28,10 @@ The name of each service, e.g. `photos`, corresponds with the subdomain that wil
 
 - `port`: the port on the upstream server that exposes the service
 - `host_header`: either `domain` (default) or `upstream` (for some Synology-specific apps)
-- `public`: either `true` or `false`. If `true`, the reverse proxy will forward any traffic from the public internet. For `false`, the client must be connected to the Tailnet.
+- `public`: either `true` or `false`. If `true`, the reverse proxy will forward any traffic from the public internet. For `false`, the client must be connected to the Tailnet and allow-listed with `IP_ALLOW_LIST`.
+
+> [!WARNING]
+> Private services will get a DNS record that points to the internal Tailnet IP. This can be circumvented by someone who runs their own DNS. So the reverse proxy will also check if the connecting client is on the IP_ALLOW_LIST.
 
 ## How to deploy
 
@@ -65,6 +68,7 @@ The following secrets are also required:
 
 ```yaml
 GH_PAT
+IP_ALLOW_LIST
 TAILSCALE_AUTH_KEY
 TF_S3_ACCESS_KEY
 TF_S3_SECRET_KEY
