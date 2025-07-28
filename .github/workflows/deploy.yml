@@ -82,7 +82,7 @@ jobs:
 
       - name: Apply Terraform
         working-directory: terraform
-        run: terraform apply -auto-approve
+        run: terraform apply -auto-approve -exclude=hetznerdns_record
 
       - name: Store Terraform outputs
         run: |
@@ -165,4 +165,4 @@ jobs:
 
       - name: Apply Terraform to update DNS of internal services
         working-directory: terraform
-        run: terraform apply -target="hetznerdns_record.subdomain_rcdw_nl_private" -auto-approve
+        run: terraform apply -auto-approve -target="hetznerdns_record"
