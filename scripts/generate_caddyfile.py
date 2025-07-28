@@ -22,15 +22,16 @@ def get_host_header(subdomain, config):
     return f"{subdomain}.{DOMAIN_SUFFIX}"
 
 def generate_ip_allow_directive():
-    if not IP_ALLOW_LIST:
-        return "    handle {\n        respond \"Forbidden\" 403\n    }"
+   if not IP_ALLOW_LIST:
+       return "    handle {\n        respond \"Forbidden\" 403\n    }"
 
-    allowed_ips = " ".join(IP_ALLOW_LIST)
-    return (
-        f"handle not remote_ip {allowed_ips} {{\n"
-        f"        respond \"Forbidden\" 403\n"
-        f"    }}"
-    )
+   allowed_ips = " ".join(IP_ALLOW_LIST)
+   return (
+       f"@notallowed not remote_ip {allowed_ips}\n"
+       f"    handle @notallowed {{\n"
+       f"        respond \"Forbidden\" 403\n"
+       f"    }}"
+   )
 
 
 def generate_private_block(domain, port, headers):
