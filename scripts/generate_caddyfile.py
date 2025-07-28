@@ -29,7 +29,7 @@ def generate_ip_allow_directive():
    return (
        f"@notallowed not remote_ip {allowed_ips}\n"
        f"    handle @notallowed {{\n"
-       f".       log 'Blocked IP: {{remote_host}}'"
+       f"        log \"Blocked IP: {{remote_host}}\"\n"
        f"        respond \"Forbidden\" 403\n"
        f"    }}"
    )
