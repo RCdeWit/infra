@@ -135,6 +135,4 @@ To update the VPS, for example to upgrade packages, simply run `uv run scripts/d
 
 ## Planned improvements
 
-- [ ] Restructure env var names
 - [ ] Include NAS configuration as code
-- [ ] Remove circular dependency in pipeline; provision DNS records as last step
