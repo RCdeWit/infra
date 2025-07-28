@@ -55,19 +55,14 @@ TAILNET: rcdewit.nl
 TF_S3_BUCKET: infra-tfstate
 TF_S3_ENDPOINT: https://fly.storage.tigris.dev
 TF_S3_REGION: auto
-UPSTREAM_IP: 100.69.133.120
-VPS_REVERSE_PROXY_TAILNET_IP: 100.99.212.12
+UPSTREAM_IP: 100.0.0.99
 ```
 
 Where the `UPSTREAM_IP` is the IP of the server that hosts the services.
 
-> [!NOTE]
-> There's a bit of a circular dependency with the `TF_VAR_VPS_REVERSE_PROXY_TAILNET_IP`, which is needed to provision the DNS records to the reverse proxy. The actual IP is only known once the VPS comes online in the Tailnet, however, The GitHub Actions Workflow contains steps to extract the internal IP and reprovision the DNS records accordingly.
-
 The following secrets are also required:
 
 ```yaml
-GH_PAT
 HCLOUD_API_TOKEN
 HETZNERDNS_TOKEN
 SSH_KEY_DEPLOYMENT_PRIVATE

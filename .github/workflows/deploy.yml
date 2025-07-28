@@ -26,7 +26,6 @@ jobs:
       TF_VAR_ssh_key_deployment_private: ${{ secrets.SSH_KEY_DEPLOYMENT_PRIVATE }}
       TF_VAR_tailscale_api_key: ${{ secrets.TAILSCALE_API_KEY }}
       TF_VAR_tailnet: ${{ vars.TAILNET }}
-      TF_VAR_vps_reverse_proxy_tailnet_ip: ${{ vars.VPS_REVERSE_PROXY_TAILNET_IP }}
       TAILSCALE_AUTH_KEY: ${{ secrets.TAILSCALE_AUTH_KEY }}
       UPSTREAM_IP: ${{ vars.UPSTREAM_IP }}
 
@@ -158,10 +157,7 @@ jobs:
             exit 1
           fi
 
-          echo "$TAILNET_IP" | gh variable set TF_VAR_VPS_REVERSE_PROXY_TAILNET_IP
           echo "TF_VAR_vps_reverse_proxy_tailnet_ip=$TAILNET_IP" >> $GITHUB_ENV
-        env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
 
       - name: Apply Terraform to update DNS of internal services
         working-directory: terraform
