@@ -25,13 +25,13 @@ def generate_ip_allow_directive():
     if not IP_ALLOW_LIST:
         return "    handle {\n        respond \"Forbidden\" 403\n    }"
 
-    lines = [f"        remote_ip {ip}" for ip in IP_ALLOW_LIST]
+    allowed_ips = " ".join(IP_ALLOW_LIST)
     return (
-        "\n    @allowed_ip {\n"
-        + "\n".join(lines)
-        + "\n    }"
-        + "\n    handle !@allowed_ip {\n        respond \"Forbidden\" 403\n    }"
+        f"handle not remote_ip {allowed_ips} {{\n"
+        f"        respond \"Forbidden\" 403\n"
+        f"    }}"
     )
+
 
 def generate_private_block(domain, port, headers):
     header_lines = "\n        ".join(headers)
@@ -39,7 +39,9 @@ def generate_private_block(domain, port, headers):
     return f"""{domain} {{
     tls {{
         dns hetzner {{env.HETZNER_API_TOKEN}}
-    }}{generate_ip_allow_directive()}
+    }}
+
+    {generate_ip_allow_directive()}
 
     reverse_proxy {UPSTREAM_IP}:{port} {{
         {header_lines}
