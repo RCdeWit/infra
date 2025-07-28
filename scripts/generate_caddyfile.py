@@ -23,7 +23,7 @@ def get_host_header(subdomain, config):
 
 def generate_ip_allow_directive():
     if not IP_ALLOW_LIST:
-        return ""
+        return "    respond 403"
     lines = [f"        remote_ip {ip}" for ip in IP_ALLOW_LIST]
     return "\n    @allowed_ip {\n" + "\n".join(lines) + "\n    }\n    respond !@allowed_ip 403"
 

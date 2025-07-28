@@ -16,6 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
+      IP_ALLOW_LIST: ${{ vars.IP_ALLOW_LIST }}
       PROJECT_ROOT: ${PWD}
       PYINFRA_INVENTORY: scripts/pyinfra/inventory.py
       PYINFRA_CONFIG: scripts/pyinfra/config.py

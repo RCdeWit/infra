@@ -49,7 +49,7 @@ The following environment variables should be configured as repository variables
 
 ```yaml
 DOMAIN: rcdw.nl
-IP_ALLOW_LIST: [1.1.1.1, 2.2.2.2]
+IP_ALLOW_LIST: ["1.1.1.1", "2.2.2.2"]
 SSH_KEY_DEPLOYMENT_PUBLIC: ssh-rsa AAA...
 TAILNET: rcdw.nl
 TF_S3_BUCKET: infra-tfstate
