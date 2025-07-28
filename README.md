@@ -31,7 +31,7 @@ The name of each service, e.g. `photos`, corresponds with the subdomain that wil
 - `public`: either `true` or `false`. If `true`, the reverse proxy will forward any traffic from the public internet. For `false`, the client must be connected to the Tailnet and allow-listed with `IP_ALLOW_LIST`.
 
 > [!WARNING]
-> Private services will get a DNS record that points to the internal Tailnet IP. This can be circumvented by someone who runs their own DNS. So the reverse proxy will also check if the connecting client is on the IP_ALLOW_LIST.
+> Private services will get a DNS record that points to the internal Tailnet IP. This can be circumvented by someone who runs their own DNS. So the reverse proxy will also check if the connecting client is on the `IP_ALLOW_LIST`.
 
 ## How to deploy
 
@@ -45,13 +45,13 @@ The GitHub Actions workflow ensures that deployments happen automatically whenev
 
 ### Environment
 
-The following environment variables should be configured as repository variables in GitHub Actions (with defaults):
+The following environment variables should be configured as repository variables in GitHub Actions:
 
 ```yaml
 DOMAIN: rcdw.nl
 IP_ALLOW_LIST: [1.1.1.1, 2.2.2.2]
 SSH_KEY_DEPLOYMENT_PUBLIC: ssh-rsa AAA...
-TAILNET: rcdewit.nl
+TAILNET: rcdw.nl
 TF_S3_BUCKET: infra-tfstate
 TF_S3_ENDPOINT: https://fly.storage.tigris.dev
 TF_S3_REGION: auto
@@ -72,17 +72,11 @@ TF_S3_ACCESS_KEY
 TF_S3_SECRET_KEY
 ```
 
-For the `TAILSCALE_AUTH_KEY, apply the following settings:
+For the `TAILSCALE_AUTH_KEY`, apply the following settings:
 
 - Reusable: `True`
 - Ephemeral: `True`
 - Tags: `tag:reverse-proxy`
-
-For the `GH_PAT`, limit access to this repository and grant read/write access to the following scopes:
-
-- Actions
-- Variables
-- Secrets
 
 ## How to deploy manually
 
